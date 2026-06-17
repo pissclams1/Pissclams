@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "GapStay — Fill the empty month",
-  description: "Revenue recovery for Airbnb and VRBO hosts with vacant 14-90 day calendar gaps."
+  description: "Turn vacant Airbnb and VRBO calendar gaps into shareable furnished-stay offers."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <footer className="footer">
           <div className="wrap" style={{display:"flex",justifyContent:"space-between",gap:16,flexWrap:"wrap"}}>
-            <span>GapStay — revenue recovery for empty Airbnb calendars.</span>
+            <span>GapStay — turn empty Airbnb calendar gaps into furnished-stay offers.</span>
             <span>Analyze. Publish. Capture inquiries. Fill the gap.</span>
           </div>
         </footer>
