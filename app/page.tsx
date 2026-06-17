@@ -9,7 +9,7 @@ export default function HomePage() {
       <div>
         <p className="kicker">For Airbnb & VRBO hosts with awkward empty dates</p>
         <h1 className="h1">Fill the empty month.</h1>
-        <p className="lead">GapStay builds a shareable mid-term rental page for your dead calendar gap, with pricing serious renters can understand.</p>
+        <p className="lead">GapStay builds a shareable mid-term rental page for your dead calendar gap, with a price designed to be the most money a serious renter is still likely to say yes to.</p>
         <div className="actions"><Link className="darkpill" href="/host">Analyze my gap free</Link><Link className="pill" href="/listing/sample">See an example</Link></div>
         <div className="grid grid3" style={{marginTop:34}}>
           <Proof stat="Free" text="to see the math for one real vacant gap" />
@@ -18,12 +18,12 @@ export default function HomePage() {
         </div>
       </div>
       <div className="card pad">
-        <div className="heroCardTop"><div><p className="kicker">Host value moment</p><h2 className="big" style={{marginTop:8}}>See whether one monthly offer beats waiting for short-term bookings.</h2></div><span className="badge">{a.certaintyScore}% certainty</span></div>
+        <div className="heroCardTop"><div><p className="kicker">Host value moment</p><h2 className="big" style={{marginTop:8}}>Not a random discount. A believable monthly offer.</h2></div><span className="badge">{a.certaintyScore}% certainty</span></div>
         <p className="muted">{prettyDate(a.startDate)} - {prettyDate(a.endDate)} · {a.nights} nights open</p>
         <div className="result" style={{marginTop:18}}>
-          <div className="stat"><span>Fantasy Airbnb revenue</span><strong>{money(a.fullNightRevenue)}</strong><p className="small">What the host hopes the gap is worth.</p></div>
+          <div className="stat"><span>Fantasy Airbnb revenue</span><strong>{money(a.fullNightRevenue)}</strong><p className="small">What the calendar would earn if every night booked.</p></div>
           <div className="stat"><span>Likely Airbnb outcome</span><strong>{money(a.likelyShortTermRevenue)}</strong><p className="small">What may actually happen with partial booking.</p></div>
-          <div className="stat"><span>GapStay offer</span><strong>{money(a.recommendedTotal)}</strong><p className="small">One mid-term stay. One guest. Less churn.</p></div>
+          <div className="stat"><span>GapStay offer</span><strong>{money(a.recommendedTotal)}</strong><p className="small">Priced to beat waiting, without scaring off monthly renters.</p></div>
           <div className="stat"><span>Monthly equivalent</span><strong>{money(a.monthlyEquivalent)}</strong><p className="small">Clear furnished-stay price guests understand.</p></div>
         </div>
       </div>
@@ -31,17 +31,22 @@ export default function HomePage() {
 
     <section className="sectionline"><div className="wrap grid grid4" style={{paddingTop:30,paddingBottom:30}}>
       <div className="metric"><b>Find</b><span className="small">Spot the open block that is quietly costing money.</span></div>
-      <div className="metric"><b>Price</b><span className="small">Turn nightly-rate guessing into a realistic furnished-stay offer.</span></div>
+      <div className="metric"><b>Price</b><span className="small">Calculate the highest believable furnished-stay offer.</span></div>
       <div className="metric"><b>Publish</b><span className="small">Create one page you can send to serious monthly renters.</span></div>
       <div className="metric"><b>Capture</b><span className="small">Collect name, email, phone, stay type, and message in the dashboard.</span></div>
     </div></section>
+
+    <section className="wrap section grid grid2">
+      <div><p className="kicker">Why not just do this yourself?</p><h2 className="big">You can. The hard part is knowing what number to put on the page.</h2><p className="muted">Most hosts either anchor to fantasy nightly revenue and get ignored, or panic-discount and leave money on the table. GapStay turns the gap into a renter-friendly monthly offer built from the dates, likely occupancy, cleaning cost, market softness, and the value of avoiding extra turns.</p></div>
+      <div className="card pad"><h3>What GapStay gives you</h3><ul className="list"><li>A shareable page instead of another listing buried in a marketplace.</li><li>A price that is lower than nightly fantasy but aimed above likely short-term outcome.</li><li>Clear monthly-equivalent pricing for renters who are not shopping like tourists.</li><li>An inquiry form that captures direct leads you own.</li></ul></div>
+    </section>
 
     <section id="how" className="wrap section">
       <p className="kicker">How it works</p>
       <h2 className="big">A page you can share when Airbnb is not filling the gap.</h2>
       <div className="grid grid3" style={{marginTop:22}}>
         <Feature title="1. Analyze the empty dates" text="Enter the gap, nightly target, expected occupancy, and cleaning cost. GapStay shows what waiting for short-term bookings may actually produce." />
-        <Feature title="2. Package one monthly offer" text="GapStay recommends an all-in furnished-stay price and turns it into a page built for relocating families, insurance stays, remote workers, and between-home renters." />
+        <Feature title="2. Package one monthly offer" text="The recommendation is built to find the highest believable all-in furnished-stay price, not an arbitrary discount." />
         <Feature title="3. Collect direct inquiries" text="Share the page anywhere. Each request captures contact details, stay reason, and message so the host can follow up directly." />
       </div>
     </section>
