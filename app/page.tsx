@@ -10,7 +10,7 @@ export default function HomePage() {
         <p className="kicker">For Airbnb & VRBO hosts with awkward empty dates</p>
         <h1 className="h1">Fill the empty month.</h1>
         <p className="lead">GapStay builds a shareable mid-term rental page for the dead calendar days that actually make sense, with a price designed to be the most money a serious renter is still likely to say yes to.</p>
-        <div className="actions"><Link className="darkpill" href="/host">Analyze my gap free</Link><Link className="pill" href="/listing/sample">See an example</Link></div>
+        <div className="actions"><Link className="darkpill" href="/host">Check my empty dates</Link><Link className="pill" href="/listing/sample">See an example</Link></div>
         <div className="grid grid3" style={{marginTop:34}}>
           <Proof stat="Free" text="to see the math for one real vacant gap" />
           <Proof stat="$19" text="to request manual review and publish for 30 days" />
@@ -68,7 +68,7 @@ export default function HomePage() {
 
     <section className="wrap section grid grid2">
       <div><p className="kicker">Beta pricing</p><h2 className="big">Generate the analysis free. Publish only if the page is worth using.</h2><p className="muted">The first paid step is tied to one specific gap page, not a software subscription.</p></div>
-      <div className="card pad"><div className="price">$19</div><h3>Manual review + 30-day published gap page</h3><p className="muted">Generate the page free. Request publishing when you want to share it with real renters.</p><div className="actions"><Link className="darkpill" href="/host">Analyze free</Link><Link className="pill" href="/listing/sample">See sample</Link></div></div>
+      <div className="card pad"><div className="price">$19</div><h3>Manual review + 30-day published gap page</h3><p className="muted">Generate the page free. Request publishing when you want to share it with real renters.</p><div className="actions"><Link className="darkpill" href="/host">Check my empty dates</Link><Link className="pill" href="/listing/sample">See sample</Link></div></div>
     </section>
   </main>;
 }
