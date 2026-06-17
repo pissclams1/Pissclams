@@ -4,7 +4,7 @@ export const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 export const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 export const stripe = stripeSecretKey
-  ? new Stripe(stripeSecretKey, { apiVersion: "2024-12-18.acacia" })
+  ? new Stripe(stripeSecretKey, { apiVersion: "2025-02-24.acacia" })
   : null;
 
 export const priceMap: Record<string, string | undefined> = {
