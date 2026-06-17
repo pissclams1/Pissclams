@@ -1,5 +1,16 @@
 import Link from "next/link";
 
 export default function PaymentSuccessPage({ searchParams }: { searchParams: { session_id?: string } }) {
-  return <main className="wrap section topspace"><div className="card pad"><p className="kicker">Payment complete</p><h1 className="big">Your GapStay page is ready to publish.</h1><p className="muted">If Stripe webhooks are configured, the listing will be marked as paid and published automatically. If this is a test deploy, use the dashboard to confirm the payment record and listing status.</p>{searchParams.session_id?<p className="small">Session: {searchParams.session_id}</p>:null}<div className="actions"><Link className="darkpill" href="/dashboard">Go to dashboard</Link><Link className="pill" href="/host">Analyze another gap</Link></div></div></main>
+  return <main className="wrap section topspace">
+    <div className="card pad">
+      <p className="kicker">Payment status</p>
+      <h1 className="big">Manual publishing is still handled by review.</h1>
+      <p className="muted">This beta does not automatically publish pages from the success screen. If a Stripe test session was created, confirm the payment in Stripe and handle publishing manually.</p>
+      {searchParams.session_id ? <p className="small">Stripe session: {searchParams.session_id}</p> : null}
+      <div className="actions">
+        <Link className="darkpill" href="/dashboard">Open demo dashboard</Link>
+        <Link className="pill" href="/host">Check another gap</Link>
+      </div>
+    </div>
+  </main>
 }
