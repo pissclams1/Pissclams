@@ -16,8 +16,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/" className="brand">GapStay</Link>
             <nav className="navlinks">
               <Link href="/#how">How it works</Link>
-              <Link href="/gtm">GTM</Link>
-              <Link href="/investor">Investor</Link>
               <Link href="/pricing">Pricing</Link>
               <Link href="/dashboard">Dashboard</Link>
               <Link href="/auth" className="pill">Host access</Link>
