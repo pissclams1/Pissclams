@@ -1,38 +1,24 @@
 import Link from "next/link";
 
-const tiers = [
-  {
-    name: "Free analysis",
-    price: "$0",
-    buyer: "Curious or skeptical host",
-    job: "Show me whether this empty block is worth trying to recover.",
-    gives: ["Enter one gap", "See fantasy revenue vs likely Airbnb outcome", "See recommended furnished-stay offer", "Preview what the page would look like", "No public page", "No inquiry capture"],
-    cta: "Analyze free"
-  },
-  {
-    name: "Publish one gap",
-    price: "$19 / 30 days",
-    buyer: "Host with one painful vacancy",
-    job: "Let me try to fill this specific dead month without starting another subscription.",
-    gives: ["Everything in Free", "One live public GapStay page", "Shareable link", "Guest request form", "Requests saved in dashboard", "Expires after 30 days unless renewed"],
-    cta: "Publish one gap"
-  },
-  {
-    name: "One property plan",
-    price: "$49 / month",
-    buyer: "Host with repeat gaps",
-    job: "Keep this property optimized whenever another gap appears.",
-    gives: ["Unlimited gap pages for one property", "Persistent dashboard", "Multiple active listings", "Request tracking", "Gap alerts", "Better fit once the host has more than two gaps per quarter"],
-    cta: "Start property plan"
-  }
-];
-
 export default function DemosPage(){
   return <main className="wrap section topspace">
-    <p className="kicker">Plan demos</p>
-    <h1 className="big">Free proves the math. $19 tests one gap. $49 manages the property.</h1>
-    <p className="lead" style={{fontSize:18}}>The $19 plan is not meant to compete with the $49 plan. It is a low-friction bridge for a host who does not want another subscription yet.</p>
-    <div className="grid grid3" style={{marginTop:32}}>{tiers.map(t=><div className="card pad" key={t.name}><p className="kicker">{t.name}</p><div className="price">{t.price}</div><p className="muted"><b>Buyer:</b> {t.buyer}</p><p className="muted"><b>Job:</b> {t.job}</p><ul className="list">{t.gives.map(x=><li key={x}>{x}</li>)}</ul><Link className={t.name.includes("Publish")?"darkpill":"pill"} href="/host">{t.cta}</Link></div>)}</div>
-    <section className="card pad" style={{marginTop:30}}><p className="kicker">The clean distinction</p><h2>$19 is a campaign. $49 is an operating system.</h2><p className="muted">A host buys $19 when they have one ugly opening and want to see if GapStay can help recover it. A host buys $49 when they believe GapStay should stay attached to the property and handle every future gap.</p></section>
+    <p className="kicker">Manual beta flow</p>
+    <h1 className="big">Check the gap. Price the stay. Request manual publish.</h1>
+    <p className="lead" style={{fontSize:18}}>This page documents the current MVP flow. GapStay is not yet selling subscriptions, gap alerts, or automated payment-gated publishing.</p>
+    <div className="grid grid3" style={{marginTop:32}}>
+      <div className="card pad"><p className="kicker">1</p><h3>Check empty dates</h3><p className="muted">Enter a vacant gap and basic host assumptions.</p></div>
+      <div className="card pad"><p className="kicker">2</p><h3>Review the offer</h3><p className="muted">See a furnished-stay price and a shareable page preview.</p></div>
+      <div className="card pad"><p className="kicker">3</p><h3>Request publish</h3><p className="muted">Ask for manual review and a 30-day page when it is worth using.</p></div>
+    </div>
+    <section className="card pad" style={{marginTop:30}}>
+      <h2>What is intentionally not automated yet</h2>
+      <ul className="list">
+        <li>No automatic Stripe publishing.</li>
+        <li>No recurring host plans.</li>
+        <li>No claim that pricing is AI-researched market comp data.</li>
+        <li>No account-dependent workflow required for the first beta test.</li>
+      </ul>
+      <div className="actions"><Link className="darkpill" href="/host">Check my empty dates</Link><Link className="pill" href="/pricing">View pricing</Link></div>
+    </section>
   </main>
 }
