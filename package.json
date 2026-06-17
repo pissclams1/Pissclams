@@ -1,6 +1,6 @@
 {
-  "name": "strada-control",
-  "version": "0.1.0",
+  "name": "gapstay",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
