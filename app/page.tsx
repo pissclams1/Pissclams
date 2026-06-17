@@ -9,7 +9,7 @@ export default function HomePage() {
       <div>
         <p className="kicker">For Airbnb & VRBO hosts with awkward empty dates</p>
         <h1 className="h1">Fill the empty month.</h1>
-        <p className="lead">GapStay builds a shareable mid-term rental page for your dead calendar gap, with a price designed to be the most money a serious renter is still likely to say yes to.</p>
+        <p className="lead">GapStay builds a shareable mid-term rental page for the dead calendar days that actually make sense, with a price designed to be the most money a serious renter is still likely to say yes to.</p>
         <div className="actions"><Link className="darkpill" href="/host">Analyze my gap free</Link><Link className="pill" href="/listing/sample">See an example</Link></div>
         <div className="grid grid3" style={{marginTop:34}}>
           <Proof stat="Free" text="to see the math for one real vacant gap" />
@@ -30,24 +30,24 @@ export default function HomePage() {
     </section>
 
     <section className="sectionline"><div className="wrap grid grid4" style={{paddingTop:30,paddingBottom:30}}>
-      <div className="metric"><b>Find</b><span className="small">Spot the open block that is quietly costing money.</span></div>
+      <div className="metric"><b>Find</b><span className="small">Identify which dead dates are long enough to package.</span></div>
       <div className="metric"><b>Price</b><span className="small">Calculate the highest believable furnished-stay offer.</span></div>
-      <div className="metric"><b>Publish</b><span className="small">Create one page you can send to serious monthly renters.</span></div>
+      <div className="metric"><b>Publish</b><span className="small">Create a more professional page than a rushed post or spreadsheet.</span></div>
       <div className="metric"><b>Capture</b><span className="small">Collect name, email, phone, stay type, and message in the dashboard.</span></div>
     </div></section>
 
     <section className="wrap section grid grid2">
-      <div><p className="kicker">Why not just do this yourself?</p><h2 className="big">You can. The hard part is knowing what number to put on the page.</h2><p className="muted">Most hosts either anchor to fantasy nightly revenue and get ignored, or panic-discount and leave money on the table. GapStay turns the gap into a renter-friendly monthly offer built from the dates, likely occupancy, cleaning cost, market softness, and the value of avoiding extra turns.</p></div>
-      <div className="card pad"><h3>What GapStay gives you</h3><ul className="list"><li>A shareable page instead of another listing buried in a marketplace.</li><li>A price that is lower than nightly fantasy but aimed above likely short-term outcome.</li><li>Clear monthly-equivalent pricing for renters who are not shopping like tourists.</li><li>An inquiry form that captures direct leads you own.</li></ul></div>
+      <div><p className="kicker">Why not just do this yourself?</p><h2 className="big">You can. It is usually not worth your time.</h2><p className="muted">You could build a page, guess a monthly price, write a post, make a form, and hope you picked the right gap. GapStay does the parts that slow hosts down: it finds the dates that make sense, prices them as a believable furnished stay, and gives you a cleaner page to share in minutes.</p></div>
+      <div className="card pad"><h3>What GapStay gives you</h3><ul className="list"><li>A faster path from empty dates to a usable page.</li><li>A more professional page than a rushed Facebook post or homemade PDF.</li><li>A price that is lower than nightly fantasy but aimed above likely short-term outcome.</li><li>Clear monthly-equivalent pricing for renters who are not shopping like tourists.</li><li>An inquiry form that captures direct leads you own.</li></ul></div>
     </section>
 
     <section id="how" className="wrap section">
       <p className="kicker">How it works</p>
       <h2 className="big">A page you can share when Airbnb is not filling the gap.</h2>
       <div className="grid grid3" style={{marginTop:22}}>
-        <Feature title="1. Analyze the empty dates" text="Enter the gap, nightly target, expected occupancy, and cleaning cost. GapStay shows what waiting for short-term bookings may actually produce." />
-        <Feature title="2. Package one monthly offer" text="The recommendation is built to find the highest believable all-in furnished-stay price, not an arbitrary discount." />
-        <Feature title="3. Collect direct inquiries" text="Share the page anywhere. Each request captures contact details, stay reason, and message so the host can follow up directly." />
+        <Feature title="1. Find the gap worth packaging" text="Enter the open dates, nightly target, expected occupancy, and cleaning cost. GapStay shows whether those dead days are long enough to sell as one furnished stay." />
+        <Feature title="2. Price it without guessing" text="The recommendation is built to find the highest believable all-in furnished-stay price, not an arbitrary discount." />
+        <Feature title="3. Share a professional page" text="Send the page anywhere. Each request captures contact details, stay reason, and message so the host can follow up directly." />
       </div>
     </section>
 
