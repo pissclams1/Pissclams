@@ -5,11 +5,10 @@ import { money, prettyDate } from "../../../lib/pricing";
 import { getListing, saveInquiry, sampleListing, type Listing } from "../../../lib/store";
 
 export default function ListingPage({params}:{params:{id:string}}){
-  const [listing,setListing]=useState<Listing|undefined>();
+  const [listing,setListing]=useState<Listing>(params.id === "sample" ? sampleListing : sampleListing);
   const [sent,setSent]=useState(false);
   const [publishSent,setPublishSent]=useState(false);
-  useEffect(()=>{setListing(getListing(params.id)||sampleListing)},[params.id]);
-  if(!listing) return null;
+  useEffect(()=>{setListing(params.id === "sample" ? sampleListing : (getListing(params.id)||sampleListing))},[params.id]);
   const a=listing.analysis;
   function submit(e:FormEvent<HTMLFormElement>){e.preventDefault(); const data=new FormData(e.currentTarget); saveInquiry({id:`inq-${Date.now().toString(36)}`,listingId:listing!.id,name:String(data.get("name")||""),email:String(data.get("email")||""),phone:String(data.get("phone")||""),reason:String(data.get("reason")||""),message:String(data.get("message")||""),createdAt:new Date().toISOString()}); setSent(true); e.currentTarget.reset()}
   function requestPublish(e:FormEvent<HTMLFormElement>){e.preventDefault(); const data=new FormData(e.currentTarget); saveInquiry({id:`pub-${Date.now().toString(36)}`,listingId:listing!.id,name:String(data.get("hostName")||listing!.hostName),email:String(data.get("email")||""),phone:String(data.get("phone")||""),reason:"Publish request",message:`Publish this GapStay page for manual beta review. Listing: ${listing!.title}. Gap: ${prettyDate(a.startDate)} - ${prettyDate(a.endDate)}. Offer: ${money(a.recommendedTotal)}. Note: ${String(data.get("note")||"")}`,createdAt:new Date().toISOString()}); setPublishSent(true); e.currentTarget.reset()}
