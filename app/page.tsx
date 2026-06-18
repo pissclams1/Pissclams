@@ -4,70 +4,70 @@ export default function HomePage() {
   return <main>
     <section className="wrap hero">
       <div>
-        <p className="kicker">For hosts with awkward empty dates</p>
-        <h1 className="h1">Fill the empty month.</h1>
-        <p className="lead">GapStay finds dead calendar gaps worth packaging, prices them as a believable furnished stay, and creates a professional page to send to renters.</p>
+        <p className="kicker">For short-term rental hosts with empty calendar gaps</p>
+        <h1 className="h1">Your calendar has money in it. You just can&apos;t see it.</h1>
+        <p className="lead">GapStay spots the open stretches between bookings, prices them as furnished monthly stays, and gives you a page worth sharing.</p>
         <div className="actions">
-          <Link className="darkpill" href="/host">Check my empty dates</Link>
-          <Link className="pill" href="/listing/sample">See an example</Link>
+          <Link className="darkpill" href="/host">Find my gaps</Link>
+          <Link className="pill" href="/listing/sample">See a sample listing</Link>
         </div>
       </div>
       <div className="card pad">
-        <p className="kicker">Why it works</p>
-        <h2 className="big">Not every empty date is worth chasing.</h2>
-        <p className="muted">The value is not just making a page. It is knowing which dead dates make sense, what number to ask for, and how to present the offer professionally.</p>
+        <p className="kicker">The missed opportunity</p>
+        <h2 className="big">Airbnb optimizes for nightly bookings.</h2>
+        <p className="muted">A 3-week gap in November is not three weeks of failure. It is a furnished-stay offer you have not made yet.</p>
       </div>
     </section>
 
     <section className="sectionline">
       <div className="wrap grid grid4" style={{paddingTop:30,paddingBottom:30}}>
-        <Step title="Find" text="Identify vacant dates long enough to package." />
-        <Step title="Price" text="Avoid random discounts and fantasy nightly math." />
-        <Step title="Publish" text="Create a cleaner page than a rushed post." />
-        <Step title="Capture" text="Collect direct renter inquiries." />
+        <Step title="Finds" text="The gaps worth packaging — not every open date qualifies." />
+        <Step title="Prices" text="A monthly rate that makes sense, not nightly math multiplied by 30." />
+        <Step title="Publishes" text="A clean listing page built for a different kind of guest." />
+        <Step title="Captures" text="Direct inquiries, with no platform cut." />
       </div>
     </section>
 
     <section className="wrap section grid grid2">
       <div>
-        <p className="kicker">Why not do it yourself?</p>
-        <h2 className="big">You can. It is usually not worth your time.</h2>
-        <p className="muted">You could build a page, guess a monthly price, make a form, and hope you picked the right gap. GapStay is faster, more professional, and built around the dates that actually make sense.</p>
+        <p className="kicker">Why this is not a 20-minute DIY project</p>
+        <h2 className="big">The work is not just making a page.</h2>
+        <p className="muted">Figuring out which gaps are worth offering, what a monthly guest will actually pay, and building something professional enough to forward is a few hours of work for one booking that might not happen. GapStay does it in minutes, and only charges when the page is worth publishing.</p>
       </div>
       <div className="card pad">
-        <h3>What you get</h3>
+        <h3>What the host gets</h3>
         <ul className="list">
-          <li>A faster path from empty dates to a usable offer.</li>
-          <li>A professional page to share with serious renters.</li>
-          <li>A clearer monthly price instead of nightly-rate guessing.</li>
-          <li>An inquiry form that captures direct leads.</li>
+          <li>A faster way to find open dates worth packaging.</li>
+          <li>A monthly-stay price that does not feel random.</li>
+          <li>A shareable listing page for relocation, insurance, work, and between-home stays.</li>
+          <li>Direct inquiries the host owns.</li>
         </ul>
       </div>
     </section>
 
     <section id="how" className="wrap section">
       <p className="kicker">How it works</p>
-      <h2 className="big">A simple page for the dates Airbnb is not filling.</h2>
+      <h2 className="big">From open calendar window to shareable furnished-stay offer.</h2>
       <div className="grid grid3" style={{marginTop:22}}>
-        <Feature title="1. Check the gap" text="Enter your open dates, nightly target, expected occupancy, and cleaning cost." />
-        <Feature title="2. Price the stay" text="Get a furnished-stay offer built to be believable to a monthly renter." />
-        <Feature title="3. Share the page" text="Send the page anywhere and collect direct inquiries from interested renters." />
+        <Feature title="1. Enter your dates" text="Drop in your open window, nightly rate, typical occupancy, and cleaning cost." />
+        <Feature title="2. Get a priced offer" text="GapStay calculates a furnished-stay rate that makes sense to a monthly guest — not a number you would be embarrassed to send." />
+        <Feature title="3. Publish and share" text="Use a clean listing page you can text, email, or post anywhere. Direct inquiries come straight to you." />
       </div>
     </section>
 
     <section className="wrap section grid grid2">
       <div>
-        <p className="kicker">Beta pricing</p>
-        <h2 className="big">Generate free. Publish only if the page is worth using.</h2>
-        <p className="muted">The first paid step is tied to one specific gap page, not a software subscription.</p>
+        <p className="kicker">Pricing</p>
+        <h2 className="big">Free to generate. $19 to publish.</h2>
+        <p className="muted">Build the page and see the pricing before you spend a cent. Pay only when you have something worth sharing — for that specific gap, not a monthly subscription.</p>
       </div>
       <div className="card pad">
         <div className="price">$19</div>
-        <h3>Manual review and 30-day published gap page</h3>
-        <p className="muted">Generate the page free. Request publishing when you want to share it with real renters.</p>
+        <h3>Manual review + 30-day published listing</h3>
+        <p className="muted">Publish one furnished-stay offer for one specific gap.</p>
         <div className="actions">
-          <Link className="darkpill" href="/host">Check my empty dates</Link>
-          <Link className="pill" href="/listing/sample">See sample</Link>
+          <Link className="darkpill" href="/host">Find my gaps</Link>
+          <Link className="pill" href="/listing/sample">See a sample listing</Link>
         </div>
       </div>
     </section>
