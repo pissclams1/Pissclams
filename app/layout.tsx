@@ -3,8 +3,8 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GapStay — Find the listing inside your calendar gap",
-  description: "Turn vacant Airbnb and VRBO calendar gaps into furnished monthly-stay offers."
+  title: "GapStay — Calendar Watch for under-booked Airbnbs",
+  description: "GapStay watches empty Airbnb and VRBO calendar gaps, recommends the next revenue move, and creates furnished-stay marketing pages."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -18,16 +18,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/#how">How it works</Link>
               <Link href="/pricing">Pricing</Link>
               <Link href="/dashboard">Dashboard</Link>
-              <Link href="/host" className="pill">Find my gaps</Link>
+              <Link href="/host" className="pill">Check a gap</Link>
             </nav>
-            <Link href="/host" className="pill mobileOnly">Find gaps</Link>
+            <Link href="/host" className="pill mobileOnly">Check gap</Link>
           </div>
         </header>
         {children}
         <footer className="footer">
           <div className="wrap" style={{display:"flex",justifyContent:"space-between",gap:16,flexWrap:"wrap"}}>
-            <span>GapStay — the gap between your bookings is a listing you have not made.</span>
-            <span>Find the gap. Price the stay. Publish the page.</span>
+            <span>GapStay — calendar watch, revenue guidance, and furnished-stay pages.</span>
+            <span>Watch the gap. Make the call. Post the offer.</span>
           </div>
         </footer>
       </body>
