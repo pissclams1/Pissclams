@@ -5,17 +5,17 @@ export default function HomePage() {
     <section className="wrap hero">
       <div>
         <p className="kicker">For under-booked Airbnb and VRBO hosts</p>
-        <h1 className="h1">Your empty calendar needs a second plan.</h1>
-        <p className="lead">GapStay watches your calendar, tells you when an open stretch has become a revenue decision, and gives you the furnished-stay marketing page to act on it.</p>
+        <h1 className="h1">Your empty month has a price. You just haven&apos;t quoted it yet.</h1>
+        <p className="lead">GapStay turns a dead calendar gap into a furnished-stay offer you can share today.</p>
         <div className="actions">
           <Link className="darkpill" href="/host">Check my first gap</Link>
           <Link className="pill" href="/listing/sample">See sample listing</Link>
         </div>
       </div>
       <div className="card pad">
-        <p className="kicker">Reminder + advisor + page builder</p>
-        <h2 className="big">Do not notice the problem when it is already too late.</h2>
-        <p className="muted">GapStay is built for hosts who are not watching their calendar closely enough and still need the property to make more than a plain yearly rental.</p>
+        <p className="kicker">Recovery workflow</p>
+        <h2 className="big">Watch the gap. Make the call. Post the offer.</h2>
+        <p className="muted">GapStay is built for hosts who need the property to make more than a plain yearly rental, but cannot keep hoping every empty date turns into a premium nightly booking.</p>
       </div>
     </section>
 
@@ -36,7 +36,7 @@ export default function HomePage() {
         <p className="muted">Some dates should stay nightly. Some open blocks should be sold differently. The goal is not to win the ADR screenshot. The goal is to cover the year.</p>
       </div>
       <div className="card pad">
-        <h3>The math is not personal</h3>
+        <h3>Lost-revenue math</h3>
         <ul className="list">
           <li>$250/night for zero nights is still zero.</li>
           <li>A lower monthly rate can beat scattered high-rate weekends.</li>
@@ -50,8 +50,8 @@ export default function HomePage() {
       <div className="wrap section grid grid3">
         <div className="card pad">
           <p className="kicker">Sample alert</p>
-          <h3>Your September–October gap is now in the package window.</h3>
-          <p className="muted">It starts in 68 days, is still mostly open, and waiting for scattered nightly bookings is now the riskier bet.</p>
+          <h3>Your September–October gap is in the package window.</h3>
+          <p className="muted">It starts in 68 days, remains open, and the furnished-stay path now beats waiting for scattered nightly bookings.</p>
         </div>
         <div className="card pad">
           <p className="kicker">Sample recommendation</p>
@@ -68,15 +68,14 @@ export default function HomePage() {
 
     <section className="wrap section grid grid2">
       <div>
-        <p className="kicker">The decision most hosts wait too long to make</p>
-        <h2 className="big">When should you stop waiting on Airbnb?</h2>
-        <p className="muted">GapStay does not send generic reminders. It alerts you when an open stretch becomes a revenue decision: long enough to sell as a block, close enough to matter, and still open enough to become expensive.</p>
-        <p className="muted">For a 30- to 60-day gap, the useful action window is usually 60–90 days before the gap starts. Under 30 days is usually salvage, not strategy.</p>
+        <p className="kicker">Why not just use Airbnb?</p>
+        <h2 className="big">Airbnb prices nights. GapStay packages gaps.</h2>
+        <p className="muted">Airbnb can tell you what one night might be worth. GapStay tells you when the whole open block should be sold differently — as a furnished stay, a split gap, a repriced nightly stretch, or a salvage play.</p>
       </div>
       <div className="card pad">
         <h3>The simple status system</h3>
         <ul className="list">
-          <li><b>Watch:</b> too early or demand may still protect the dates.</li>
+          <li><b>Watch:</b> too early or demand protects the dates.</li>
           <li><b>Package:</b> build the furnished-stay offer, but keep Airbnb live.</li>
           <li><b>Act:</b> start posting and outreach now.</li>
           <li><b>Split:</b> hold high-demand nights and package the rest.</li>
