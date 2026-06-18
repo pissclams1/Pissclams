@@ -68,6 +68,19 @@ export async function POST(request: Request) {
       next: { revalidate: 0 }
     });
     const html = await response.text();
+    if (!response.ok) {
+      return NextResponse.json({
+        ok: true,
+        source,
+        sourceUrl: rawUrl,
+        imported: false,
+        title: `${source} furnished stay offer`,
+        description: `A furnished stay imported from a public ${source} listing. Confirm the details before analysis.`,
+        signals: {},
+        ...dates,
+        note: "The listing page limited public metadata, but dates from the URL were captured. Confirm the details before analysis."
+      });
+    }
     const title = meta(html, "og:title") || textBetween(html, /<title[^>]*>(.*?)<\/title>/i) || `${source} furnished stay offer`;
     const description = meta(html, "og:description") || meta(html, "description") || `Imported from ${source}: ${rawUrl}`;
     const image = meta(html, "og:image");
@@ -83,9 +96,9 @@ export async function POST(request: Request) {
       image,
       signals,
       ...dates,
-      note: response.ok ? "Imported public listing metadata and visible signals. Confirm the details before analysis." : "Imported dates from URL. Listing metadata was limited."
+      note: "Imported public listing metadata and visible signals. Confirm the details before analysis."
     });
-  } catch (error: any) {
+  } catch {
     return NextResponse.json({
       ok: true,
       source,

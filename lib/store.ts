@@ -1,10 +1,10 @@
 import type { GapAnalysis } from "./pricing";
-import { getSupabaseBrowserClient } from "./supabase";
-
 export type Listing = {
-  id: string; title: string; city: string; state: string; propertyType: string; bedrooms: number; bathrooms: number; hostName: string; description: string; amenities: string[]; rules: string[]; analysis: GapAnalysis;
+  id: string; title: string; city: string; state: string; propertyType: string; bedrooms: number; bathrooms: number; hostName: string; description: string; amenities: string[]; rules: string[]; analysis: GapAnalysis; sourceUrl?: string; imageUrl?: string; rating?: string; reviews?: string; guestCount?: string; nightlyRate?: string; publishStatus?: string;
 };
 export type Inquiry = { id: string; listingId: string; name: string; email: string; phone: string; reason: string; message: string; createdAt: string };
+type ListingRow = { id:string; title:string; city:string; state:string; property_type:string; bedrooms:number; bathrooms:number; host_name:string; description:string; amenities:string[]; rules:string[]; analysis:GapAnalysis; source_url?:string|null; image_url?:string|null; rating?:string|null; reviews?:string|null; guest_count?:string|null; nightly_rate?:string|null; publish_status?:string|null };
+type InquiryRow = { id:string; listing_id:string; name:string; email:string; phone?:string|null; reason?:string|null; message?:string|null; created_at:string };
 export const sampleListing: Listing = {
   id: "sample",
   title: "Quiet furnished coastal stay with workspace",
@@ -15,6 +15,9 @@ export const sampleListing: Listing = {
   bathrooms: 2,
   hostName: "Sample Host",
   description: "A clean, fully furnished mid-term stay for relocation, insurance displacement, remote work, and between-home housing. Transparent monthly pricing and one clear all-in quote.",
+  imageUrl: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&q=85",
+  guestCount: "4",
+  publishStatus: "published",
   amenities: ["Fast Wi-Fi", "Workspace", "Full kitchen", "Laundry", "Parking", "Utilities included"],
   rules: ["No smoking", "Pets considered", "Quiet hours after 10 PM", "Normal checkout cleaning only"],
   analysis: { id: "sample-gap", startDate: "2026-07-03", endDate: "2026-08-14", nights: 42, fullNightRevenue: 8820, likelyShortTermRevenue: 3780, likelyBookedNights: 18, recommendedNightly: 92, recommendedTotal: 3864, monthlyEquivalent: 2760, turnoverSavings: 585, certaintyScore: 90, explanation: ["42 open nights can be packaged as one furnished stay.", "The offer beats likely short-term revenue while reducing guest turnover.", "All-in pricing is easier for guests to trust."] }
@@ -28,52 +31,59 @@ export function saveListing(listing: Listing) { const existing = getListings().f
 export function getInquiries(): Inquiry[] { if (typeof window === "undefined") return []; try { return JSON.parse(localStorage.getItem(inquiriesKey) || "[]"); } catch { return []; } }
 export function saveInquiry(inquiry: Inquiry) { localStorage.setItem(inquiriesKey, JSON.stringify([inquiry, ...getInquiries()])); }
 
-function fromRow(row: any): Listing {
-  return { id: row.id, title: row.title, city: row.city, state: row.state, propertyType: row.property_type, bedrooms: Number(row.bedrooms || 0), bathrooms: Number(row.bathrooms || 0), hostName: row.host_name, description: row.description, amenities: row.amenities || [], rules: row.rules || [], analysis: row.analysis };
+function fromRow(row: ListingRow): Listing {
+  return { id: row.id, title: row.title, city: row.city, state: row.state, propertyType: row.property_type, bedrooms: Number(row.bedrooms || 0), bathrooms: Number(row.bathrooms || 0), hostName: row.host_name, description: row.description, amenities: row.amenities || [], rules: row.rules || [], analysis: row.analysis, sourceUrl: row.source_url || undefined, imageUrl: row.image_url || undefined, rating: row.rating || undefined, reviews: row.reviews || undefined, guestCount: row.guest_count || undefined, nightlyRate: row.nightly_rate || undefined, publishStatus: row.publish_status || "preview" };
 }
-function toRow(listing: Listing, ownerEmail?: string) {
-  return { id: listing.id, title: listing.title, city: listing.city, state: listing.state, property_type: listing.propertyType, bedrooms: listing.bedrooms, bathrooms: listing.bathrooms, host_name: listing.hostName, description: listing.description, amenities: listing.amenities, rules: listing.rules, analysis: listing.analysis, owner_email: ownerEmail || null, publish_status: "preview" };
+
+export function getOwnerToken() {
+  if (typeof window === "undefined") return "";
+  const key = "gapstay:owner-token";
+  let token = localStorage.getItem(key);
+  if (!token) {
+    token = `${crypto.randomUUID()}-${crypto.randomUUID()}`;
+    localStorage.setItem(key, token);
+  }
+  return token;
 }
 
 export async function saveListingRemote(listing: Listing, ownerEmail?: string) {
-  const supabase = getSupabaseBrowserClient();
-  if (!supabase) { saveListing(listing); return listing; }
-  const { data, error } = await supabase.from("gapstay_listings").upsert(toRow(listing, ownerEmail)).select("*").single();
-  if (error) { console.error(error.message); saveListing(listing); return listing; }
-  const saved = fromRow(data);
+  const response = await fetch("/api/listings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ listing, ownerEmail, ownerToken: getOwnerToken() }) });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || !data.listing) throw new Error(data.message || "Could not save listing.");
+  const saved = data.listing as Listing;
   saveListing(saved);
   return saved;
 }
 export async function getListingRemote(id: string) {
   if (id === "sample") return sampleListing;
-  const supabase = getSupabaseBrowserClient();
-  if (!supabase) return getListing(id) || null;
-  const { data, error } = await supabase.from("gapstay_listings").select("*").eq("id", id).single();
-  if (error || !data) return getListing(id) || null;
-  const listing = fromRow(data);
+  const response = await fetch(`/api/listings?id=${encodeURIComponent(id)}`, { headers: { "x-gapstay-owner-token": getOwnerToken() }, cache: "no-store" });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || !data.listing) return null;
+  const listing = data.listing as Listing;
   saveListing(listing);
   return listing;
 }
 export async function getListingsRemote() {
-  const supabase = getSupabaseBrowserClient();
-  if (!supabase) return getListings();
-  const { data, error } = await supabase.from("gapstay_listings").select("*").order("created_at", { ascending: false }).limit(50);
-  if (error || !data) return getListings();
-  return [sampleListing, ...data.filter((x:any)=>x.id !== "sample").map(fromRow)];
+  const data = await getDashboardRemote();
+  return [sampleListing, ...data.listings.filter((x: Listing) => x.id !== "sample")];
 }
 export async function saveInquiryRemote(inquiry: Inquiry) {
-  const supabase = getSupabaseBrowserClient();
-  if (!supabase) { saveInquiry(inquiry); return inquiry; }
-  const row = { id: inquiry.id, listing_id: inquiry.listingId, name: inquiry.name, email: inquiry.email, phone: inquiry.phone, reason: inquiry.reason, message: inquiry.message, created_at: inquiry.createdAt, request_state: "new" };
-  const { error } = await supabase.from("gapstay_inquiries").insert(row);
-  if (error) console.error(error.message);
-  saveInquiry(inquiry);
+  const response = await fetch("/api/inquiries", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(inquiry) });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.message || "Could not send inquiry.");
   return inquiry;
 }
 export async function getInquiriesRemote() {
-  const supabase = getSupabaseBrowserClient();
-  if (!supabase) return getInquiries();
-  const { data, error } = await supabase.from("gapstay_inquiries").select("*").order("created_at", { ascending: false }).limit(100);
-  if (error || !data) return getInquiries();
-  return data.map((r:any)=>({ id:r.id, listingId:r.listing_id, name:r.name, email:r.email, phone:r.phone || "", reason:r.reason || "", message:r.message || "", createdAt:r.created_at }));
+  const data = await getDashboardRemote();
+  return data.inquiries;
+}
+
+async function getDashboardRemote(): Promise<{ listings: Listing[]; inquiries: Inquiry[] }> {
+  const response = await fetch("/api/dashboard", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ownerToken: getOwnerToken() }), cache: "no-store" });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.message || "Could not load dashboard.");
+  return {
+    listings: (data.listings || []).map(fromRow),
+    inquiries: (data.inquiries || []).map((row:InquiryRow)=>({ id:row.id, listingId:row.listing_id, name:row.name, email:row.email, phone:row.phone || "", reason:row.reason || "", message:row.message || "", createdAt:row.created_at }))
+  };
 }

@@ -1,17 +1,17 @@
 import Link from "next/link";
 
 const plans = [
-  { name: "Free analysis", price: "$0", text: "Analyze one empty gap and see the math before paying.", cta: "Analyze a gap", href: "/host", featured: false },
-  { name: "Publish one offer", price: "$19", text: "Create one shareable furnished-stay offer for 30 days with dates, price, renter fit, posting guidance, and an inquiry form.", cta: "Analyze a gap", href: "/host", featured: true },
-  { name: "Calendar Watch", price: "$49/mo", text: "Early access assisted monitoring for one property, with recommendations when open dates should be watched, repriced, split, or packaged.", cta: "Analyze a gap", href: "/host", featured: false },
-  { name: "Portfolio Watch", price: "$99/mo", text: "Early access assisted monitoring for up to 3 properties, with prioritized gap recommendations across multiple calendars.", cta: "Analyze a gap", href: "/host", featured: false }
+  { name: "Free Analysis", price: "$0", text: "Analyze one calendar gap and compare likely nightly revenue with a furnished-stay offer.", cta: "Analyze a gap", href: "/host", featured: false },
+  { name: "Publish One Offer", price: "$19", text: "Publish one shareable furnished-stay offer for 30 days with inquiry capture and posting guidance.", cta: "Analyze a gap", href: "/host", featured: false },
+  { name: "Calendar Watch", price: "$49/mo", text: "Monitor one property for costly open windows and get a recommendation before the gap gets harder to fill.", cta: "Analyze my property", href: "/host", featured: true },
+  { name: "Portfolio Watch", price: "$99/mo", text: "Monitor up to three properties and prioritize the calendar gaps with the most revenue at risk.", cta: "Analyze my portfolio", href: "/host", featured: false }
 ];
 
 export default function PricingPage(){
   return <main className="wrap section topspace">
     <p className="kicker">Pricing</p>
-    <h1 className="big">Free to analyze. $19 to publish one furnished-stay offer.</h1>
-    <p className="lead" style={{fontSize:18}}>Free to analyze. $19 to publish. No commitment until you see the math.</p>
-    <div className="grid grid4" style={{marginTop:34}}>{plans.map(p=><div className="card pad" key={p.name} style={p.featured?{outline:"3px solid rgba(180,106,79,.25)"}:{}}><p className="kicker">{p.name}</p><div className="price">{p.price}</div><p className="muted">{p.text}</p><Link className={p.featured?"darkpill":"pill"} href={p.href}>{p.cta}</Link></div>)}</div>
-  </main>
+    <h1 className="big">Start with the gap. Pay when you want to act on it.</h1>
+    <p className="lead" style={{fontSize:18}}>Every plan starts with the same question: which use of the entire open window produces the most revenue?</p>
+    <div className="grid grid4 pricingGrid">{plans.map(plan=><div className={`priceCard${plan.featured?" featuredPrice":""}`} key={plan.name}><p className="kicker">{plan.name}</p><div className="price">{plan.price}</div><p className="muted">{plan.text}</p><Link className={plan.featured?"darkpill":"pill"} href={plan.href}>{plan.cta}</Link></div>)}</div>
+  </main>;
 }

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { getOwnerToken } from "../lib/store";
 
 export default function CheckoutButton({ plan, listingId, email, children, className = "darkpill" }: { plan: string; listingId?: string; email?: string; children: React.ReactNode; className?: string }) {
   const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ export default function CheckoutButton({ plan, listingId, email, children, class
       const response = await fetch("/api/start-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, listingId, email })
+        body: JSON.stringify({ plan, listingId, email, ownerToken: listingId ? getOwnerToken() : undefined })
       });
       const data = await response.json().catch(() => ({}));
       if (data?.url) {
