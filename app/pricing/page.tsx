@@ -3,8 +3,8 @@ import Link from "next/link";
 const plans = [
   { name: "Free analysis", price: "$0", text: "Analyze one empty gap and see the math before paying.", cta: "Analyze a gap", href: "/host", featured: false },
   { name: "Publish one gap", price: "$19", text: "Publish one furnished-stay page for 30 days and start taking direct requests.", cta: "Publish a gap", href: "/host", featured: true },
-  { name: "Calendar Watch", price: "$49/mo", text: "One property monitored for costly gaps, with alerts, recommendations, and furnished-stay pages when action is needed.", cta: "Analyze a gap", href: "/host", featured: false },
-  { name: "Portfolio Watch", price: "$99/mo", text: "Up to 3 properties monitored, with prioritized alerts and furnished-stay pages across multiple calendars.", cta: "Analyze a gap", href: "/host", featured: false }
+  { name: "Calendar Watch", price: "$49/mo", text: "One property watched for costly gaps, with alerts, recommendations, and furnished-stay pages when it is time to act.", cta: "Analyze a gap", href: "/host", featured: false },
+  { name: "Portfolio Watch", price: "$99/mo", text: "Up to 3 properties watched for costly gaps, with prioritized alerts, recommendations, and furnished-stay pages across multiple calendars.", cta: "Analyze a gap", href: "/host", featured: false }
 ];
 
 export default function PricingPage(){
