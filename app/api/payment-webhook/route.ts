@@ -59,7 +59,7 @@ async function recordPayment(input: { sessionId: string; customerId?: string | n
 async function unlockListing(listingId: string, sessionId: string) {
   if (!supabaseUrl || !supabaseKey) return;
   const paidUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
-  const response = await fetch(`${supabaseUrl}/rest/v1/listings?id=eq.${encodeURIComponent(listingId)}`, {
+  const response = await fetch(`${supabaseUrl}/rest/v1/gapstay_listings?id=eq.${encodeURIComponent(listingId)}`, {
     method: "PATCH",
     headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({ publish_status: "published", paid_until: paidUntil, stripe_session_id: sessionId })
