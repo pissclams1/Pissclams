@@ -30,6 +30,24 @@ export default function HomePage() {
 
     <section className="wrap section grid grid2">
       <div>
+        <p className="kicker">The number that matters</p>
+        <h2 className="big">Highest nightly rate does not pay the mortgage. Highest yearly revenue does.</h2>
+        <p className="muted">A high nightly price feels good on the calendar. Empty nights do not. GapStay helps hosts stop measuring the property by the rate they wish they could get and start measuring it by how much money the calendar actually produces.</p>
+        <p className="muted">Sometimes the better move is still waiting for nightly guests. Sometimes the better move is locking in a clean furnished-stay offer before the whole gap turns into zero.</p>
+      </div>
+      <div className="card pad">
+        <h3>The math is not personal</h3>
+        <ul className="list">
+          <li>$250/night for zero nights is still zero.</li>
+          <li>A lower monthly rate can beat scattered high-rate weekends.</li>
+          <li>Fewer turnovers means less cleaning, less damage risk, and less platform dependency.</li>
+          <li>The goal is not winning the ADR screenshot. The goal is covering the year.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section className="wrap section grid grid2">
+      <div>
         <p className="kicker">The decision most hosts wait too long to make</p>
         <h2 className="big">When should you stop waiting on Airbnb?</h2>
         <p className="muted">The point is not to panic because September is empty in June. The point is to know when waiting for nightly bookings is still rational — and when the monthly-stay option is about to disappear.</p>
