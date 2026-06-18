@@ -24,12 +24,12 @@ export default function HostPage(){
     try{
       const response=await fetch("/api/import-listing",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url:sourceUrl})});
       const data=await response.json();
-      if(!data.ok){setError(data.message||"Could not import listing.");return}
+      if(!data.ok){setImported(null);setShowManual(true);setError("We couldn’t import this listing automatically. No problem — confirm the URL and enter the details below.");return}
       const s=data.signals||{};
       setImported(data);
       setForm(prev=>({...prev,startDate:data.startDate||prev.startDate,endDate:data.endDate||prev.endDate,title:data.title||prev.title,description:data.description||prev.description,nightlyTarget:s.nightly||prev.nightlyTarget,bedrooms:s.bedrooms||prev.bedrooms,bathrooms:s.bathrooms||prev.bathrooms}));
       setShowManual(true);
-    }catch{setError("Could not import this listing. You can enter the details manually.")}
+    }catch{setImported(null);setShowManual(true);setError("We couldn’t import this listing automatically. No problem — confirm the URL and enter the details below.")}
     finally{setImporting(false)}
   }
   async function submit(e:FormEvent){
@@ -42,23 +42,22 @@ export default function HostPage(){
   }
   return <main className="wrap section topspace"><div className="grid grid2">
     <div><p className="kicker">Free Analysis</p><h1 className="big">Paste your Airbnb or VRBO listing URL.</h1><p className="muted">Import the listing first. Then confirm or edit the details before GapStay analyzes the full calendar gap.</p>
-      <div className="card pad grid" style={{marginTop:24, marginBottom:18}}><Field label="Airbnb or VRBO listing URL" value={form.sourceUrl} onChange={v=>update("sourceUrl",v)} required={false}/><button className="darkpill" type="button" onClick={()=>importSourceUrl()} disabled={importing}>{importing?"Importing...":"Import listing"}</button><p className="small">Paste a public listing URL. GapStay imports public metadata, visible signals, and check-in/check-out dates when available.</p></div>
+      <div className="card pad grid" style={{marginTop:24, marginBottom:18}}><Field label="Airbnb or VRBO listing URL" value={form.sourceUrl} onChange={v=>update("sourceUrl",v)} required={false}/><button className="darkpill" type="button" onClick={()=>importSourceUrl()} disabled={importing}>{importing?"Importing...":"Import listing"}</button><p className="small">Paste any public Airbnb or VRBO listing URL.</p></div>
       {error?<div className="errorBox">{error}</div>:null}
-      {imported?<div className="card pad importedCard" style={{marginBottom:18}}><p className="kicker">Imported from {imported.source||"listing"}</p><h2>{form.title}</h2>{imported.image?<img src={imported.image} alt={form.title} />:null}<div className="result" style={{marginTop:18}}><Signal label="Dates" value={`${prettyDate(form.startDate)} – ${prettyDate(form.endDate)}`}/><Signal label="Nightly rate" value={imported.signals?.nightly?`$${imported.signals.nightly}`:"Not available"}/><Signal label="Reviews" value={imported.signals?.reviews||"Not visible"}/><Signal label="Rating" value={imported.signals?.rating||"Not visible"}/><Signal label="Guest count" value={imported.signals?.guests||"Not visible"}/><Signal label="Bedrooms" value={imported.signals?.bedrooms||form.bedrooms}/><Signal label="Bathrooms" value={imported.signals?.bathrooms||form.bathrooms}/></div></div>:null}
+      {imported?<div className="card pad importedCard" style={{marginBottom:18}}><p className="kicker">{imported.imported?`Imported from ${imported.source||"listing"}`:"Manual entry ready"}</p><h2>{imported.imported?form.title:"We couldn’t read the listing automatically."}</h2>{!imported.imported?<p className="successBox">The URL is saved and the manual form is open below. Confirm the details to continue your free analysis.</p>:null}{imported.image?<img src={imported.image} alt={form.title} />:null}<div className="result" style={{marginTop:18}}><Signal label="Dates" value={`${prettyDate(form.startDate)} – ${prettyDate(form.endDate)}`}/><Signal label="Nightly rate" value={imported.signals?.nightly?`$${imported.signals.nightly}`:"Not available"}/><Signal label="Reviews" value={imported.signals?.reviews||"Not visible"}/><Signal label="Rating" value={imported.signals?.rating||"Not visible"}/><Signal label="Guest count" value={imported.signals?.guests||"Not visible"}/><Signal label="Bedrooms" value={imported.signals?.bedrooms||form.bedrooms}/><Signal label="Bathrooms" value={imported.signals?.bathrooms||form.bathrooms}/></div></div>:null}
       {!showManual?<div id="manual" className="manualPrompt"><button className="manualLink buttonLink" type="button" onClick={()=>setShowManual(true)}>Enter details manually</button></div>:<form onSubmit={submit} className="card pad grid" style={{marginTop:24}}>
         <p className="kicker">Confirm or edit</p>
         <div className="grid grid2"><Field label="Start date" type="date" value={form.startDate} onChange={v=>update("startDate",v)}/><Field label="End date" type="date" value={form.endDate} onChange={v=>update("endDate",v)}/></div>
         <div className="grid grid3"><Field label="Nightly target" value={form.nightlyTarget} onChange={v=>update("nightlyTarget",v)}/><Field label="Expected occupancy %" value={form.expectedOccupancy} onChange={v=>update("expectedOccupancy",v)}/><Field label="Cleaning fee" value={form.cleaningFee} onChange={v=>update("cleaningFee",v)}/></div>
         <label><span className="label">Market</span><select className="input" value={form.market} onChange={e=>update("market",e.target.value)}><option value="soft">Soft / lots of vacancy</option><option value="balanced">Balanced</option><option value="hot">Hot / scarce inventory</option></select></label>
         <div className="grid grid2"><Field label="Listing title" value={form.title} onChange={v=>update("title",v)}/><Field label="Host name" value={form.hostName} onChange={v=>update("hostName",v)}/></div>
-        <Field label="Host email" type="email" value={form.ownerEmail} onChange={v=>update("ownerEmail",v)}/>
         <div className="grid grid3"><Field label="City" value={form.city} onChange={v=>update("city",v)}/><Field label="State" value={form.state} onChange={v=>update("state",v)}/><Field label="Type" value={form.propertyType} onChange={v=>update("propertyType",v)}/></div>
         <div className="grid grid2"><Field label="Bedrooms" value={form.bedrooms} onChange={v=>update("bedrooms",v)}/><Field label="Bathrooms" value={form.bathrooms} onChange={v=>update("bathrooms",v)}/></div>
         <label><span className="label">Description</span><textarea className="input textarea" value={form.description} onChange={e=>update("description",e.target.value)}/></label>
         <button className="darkpill" type="submit">{saving?"Saving...":"Analyze imported listing"}</button>
       </form>}
     </div>
-    <div className="card pad" style={{alignSelf:"start",position:"sticky",top:96}}>{listing?<Result listing={listing}/>:<p className="muted">Your scan will appear here after import and confirmation. It will compare likely nightly revenue against a furnished-stay fallback offer.</p>}</div>
+    <div className="card pad" style={{alignSelf:"start",position:"sticky",top:96}}>{listing?<Result listing={listing}/>:<p className="muted">After you confirm the details, GapStay will show you what the gap is likely worth as short stays versus one furnished offer.</p>}</div>
   </div></main>
 }
 function Field({label,value,onChange,type="text",required=true}:{label:string;value:string;onChange:(v:string)=>void;type?:string;required?:boolean}){return <label><span className="label">{label}</span><input className="input" type={type} value={value} onChange={e=>onChange(e.target.value)} required={required}/></label>}

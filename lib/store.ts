@@ -1,9 +1,9 @@
 import type { GapAnalysis } from "./pricing";
 export type Listing = {
-  id: string; title: string; city: string; state: string; propertyType: string; bedrooms: number; bathrooms: number; hostName: string; description: string; amenities: string[]; rules: string[]; analysis: GapAnalysis; sourceUrl?: string; imageUrl?: string; rating?: string; reviews?: string; guestCount?: string; nightlyRate?: string; publishStatus?: string;
+  id: string; title: string; city: string; state: string; propertyType: string; bedrooms: number; bathrooms: number; hostName: string; description: string; amenities: string[]; rules: string[]; analysis: GapAnalysis; sourceUrl?: string; imageUrl?: string; rating?: string; reviews?: string; guestCount?: string; nightlyRate?: string; publishStatus?: string; paidUntil?: string;
 };
 export type Inquiry = { id: string; listingId: string; name: string; email: string; phone: string; reason: string; message: string; createdAt: string };
-type ListingRow = { id:string; title:string; city:string; state:string; property_type:string; bedrooms:number; bathrooms:number; host_name:string; description:string; amenities:string[]; rules:string[]; analysis:GapAnalysis; source_url?:string|null; image_url?:string|null; rating?:string|null; reviews?:string|null; guest_count?:string|null; nightly_rate?:string|null; publish_status?:string|null };
+type ListingRow = { id:string; title:string; city:string; state:string; property_type:string; bedrooms:number; bathrooms:number; host_name:string; description:string; amenities:string[]; rules:string[]; analysis:GapAnalysis; source_url?:string|null; image_url?:string|null; rating?:string|null; reviews?:string|null; guest_count?:string|null; nightly_rate?:string|null; publish_status?:string|null; paid_until?:string|null };
 type InquiryRow = { id:string; listing_id:string; name:string; email:string; phone?:string|null; reason?:string|null; message?:string|null; created_at:string };
 export const sampleListing: Listing = {
   id: "sample",
@@ -32,7 +32,7 @@ export function getInquiries(): Inquiry[] { if (typeof window === "undefined") r
 export function saveInquiry(inquiry: Inquiry) { localStorage.setItem(inquiriesKey, JSON.stringify([inquiry, ...getInquiries()])); }
 
 function fromRow(row: ListingRow): Listing {
-  return { id: row.id, title: row.title, city: row.city, state: row.state, propertyType: row.property_type, bedrooms: Number(row.bedrooms || 0), bathrooms: Number(row.bathrooms || 0), hostName: row.host_name, description: row.description, amenities: row.amenities || [], rules: row.rules || [], analysis: row.analysis, sourceUrl: row.source_url || undefined, imageUrl: row.image_url || undefined, rating: row.rating || undefined, reviews: row.reviews || undefined, guestCount: row.guest_count || undefined, nightlyRate: row.nightly_rate || undefined, publishStatus: row.publish_status || "preview" };
+  return { id: row.id, title: row.title, city: row.city, state: row.state, propertyType: row.property_type, bedrooms: Number(row.bedrooms || 0), bathrooms: Number(row.bathrooms || 0), hostName: row.host_name, description: row.description, amenities: row.amenities || [], rules: row.rules || [], analysis: row.analysis, sourceUrl: row.source_url || undefined, imageUrl: row.image_url || undefined, rating: row.rating || undefined, reviews: row.reviews || undefined, guestCount: row.guest_count || undefined, nightlyRate: row.nightly_rate || undefined, publishStatus: row.publish_status || "preview", paidUntil: row.paid_until || undefined };
 }
 
 export function getOwnerToken() {

@@ -14,8 +14,8 @@ export default function HomePage() {
         <Link className="manualLink" href="/host#manual">Enter details manually</Link>
       </div>
       <div className="thesisCard">
-        <p>The goal isn&apos;t the highest nightly rate.</p>
-        <strong>It&apos;s the most revenue from the entire gap.</strong>
+        <p>Airbnb optimizes for the night.</p>
+        <strong>You need to optimize for the month.</strong>
         <div className="calendarVisual" aria-hidden="true">
           <span>Booked</span><span>Booked</span><span className="gapBlock">42-night gap</span><span>Booked</span>
         </div>
@@ -28,8 +28,15 @@ export default function HomePage() {
         <div className="grid grid3">
           <Feature number="1" title="Import your listing" text="Paste a public Airbnb or VRBO URL. Review the property details and open dates GapStay can see." />
           <Feature number="2" title="Confirm the gap" text="Edit the dates, nightly rate, occupancy expectation, and property details before analysis." />
-          <Feature number="3" title="Compare the revenue" text="See likely nightly revenue beside a furnished-stay offer, then publish the offer if it makes sense." />
+          <Feature number="3" title="Compare the revenue" text="See likely nightly revenue beside a furnished-stay offer. Publish it in one click if the numbers work." />
         </div>
+      </div>
+    </section>
+
+    <section className="wrap section">
+      <div className="grid grid2">
+        <div className="card pad"><p className="kicker">Host outcome</p><h2>42-night gap in Marco Island</h2><p className="lead" style={{fontSize:18}}>A two-bedroom host packaged a six-week opening as one furnished stay and recovered <strong>$3,864</strong> in projected gap revenue.</p><p className="small">Illustrative early-access case study based on a realistic host scenario.</p></div>
+        <div className="card pad"><p className="kicker">Early access</p><h2>Host outcomes will appear here.</h2><p className="muted">Early access hosts get their result featured.</p><Link className="darkpill" href="/host">Analyze a gap</Link></div>
       </div>
     </section>
 
@@ -50,9 +57,10 @@ export default function HomePage() {
       <div className="grid grid4 pricingPreview">
         <Price name="Free Analysis" price="$0" cta="Analyze a gap" href="/host" />
         <Price name="Publish One Offer" price="$19" cta="Analyze a gap" href="/host" />
-        <Price name="Calendar Watch" price="$49/mo" cta="Analyze my property" href="/host" featured />
-        <Price name="Portfolio Watch" price="$99/mo" cta="Analyze my portfolio" href="/host" />
+        <Price name="One Property" price="$49/mo" cta="Analyze my property" href="/host" featured />
+        <Price name="Multiple Properties" price="$99/mo" cta="Analyze my portfolio" href="/host" />
       </div>
+      <p className="successBox" style={{maxWidth:680,margin:"18px auto 0",textAlign:"center"}}>Have more than one gap coming? The $49 plan pays for itself on the second one.</p>
     </section>
   </main>;
 }

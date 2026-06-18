@@ -19,6 +19,7 @@ export async function POST(request: Request) {
 
   const session = await stripe.checkout.sessions.create({
     mode: planMode(plan),
+    ...(planMode(plan) === "payment" ? { customer_creation: "always" as const } : {}),
     line_items: [{ price, quantity: 1 }],
     customer_email: email,
     allow_promotion_codes: true,

@@ -10,7 +10,7 @@ export default function ListingPage({params}:{params:Promise<{id:string}>}){
   const [loading,setLoading]=useState(id !== "sample");
   const [sent,setSent]=useState(false);
   const [error,setError]=useState("");
-  useEffect(()=>{let alive=true; async function load(){setLoading(true); const found=await getListingRemote(id); if(alive){setListing(id === "sample" ? sampleListing : found); setLoading(false);}} load(); return()=>{alive=false}},[id]);
+  useEffect(()=>{if(id === "sample") return; let alive=true; async function load(){setLoading(true); const found=await getListingRemote(id); if(alive){setListing(found); setLoading(false);}} void load(); return()=>{alive=false}},[id]);
   if(loading) return <main className="wrap section topspace"><div className="card pad"><p className="muted">Loading offer...</p></div></main>;
   if(!listing) return <main className="wrap section topspace"><div className="card pad"><p className="kicker">Offer not found</p><h1 className="big">This furnished-stay offer is not public yet.</h1><p className="muted">The host can preview it from the browser where it was created or publish it after payment.</p><div className="actions"><Link className="darkpill" href="/host">Analyze a gap</Link><Link className="pill" href="/listing/sample">See sample listing</Link></div></div></main>;
   const analysis=listing.analysis;
