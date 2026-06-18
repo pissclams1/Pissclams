@@ -8,7 +8,7 @@ export default function HomePage() {
         <h1 className="h1">Your empty month has a price. You just haven&apos;t quoted it yet.</h1>
         <p className="lead">GapStay turns a dead calendar gap into a furnished-stay offer you can share today.</p>
         <div className="actions">
-          <Link className="darkpill" href="/host">Check my first gap</Link>
+          <Link className="darkpill" href="/host">Analyze a gap</Link>
           <Link className="pill" href="/listing/sample">See sample listing</Link>
         </div>
       </div>
@@ -106,7 +106,7 @@ export default function HomePage() {
       <p className="kicker">How it works</p>
       <h2 className="big">From calendar gap to action.</h2>
       <div className="grid grid3" style={{marginTop:22}}>
-        <Feature title="1. Check one gap" text="Enter your open window, nightly target, expected occupancy, and cleaning cost." />
+        <Feature title="1. Analyze a gap" text="Enter your open window, nightly target, expected occupancy, and cleaning cost." />
         <Feature title="2. Get the recommendation" text="GapStay shows whether the better move is to wait, reprice, split, package, or salvage." />
         <Feature title="3. Turn on watch" text="Subscribe so GapStay keeps monitoring the calendar and alerts you before the next gap gets expensive." />
       </div>
@@ -123,7 +123,7 @@ export default function HomePage() {
         <h3>Calendar Watch for one property</h3>
         <p className="muted">Rolling calendar monitoring, gap alerts, advisory reports, and shareable furnished-stay pages.</p>
         <div className="actions">
-          <Link className="darkpill" href="/host">Check my first gap</Link>
+          <Link className="darkpill" href="/host">Analyze a gap</Link>
           <Link className="pill" href="/pricing">See pricing</Link>
         </div>
       </div>
