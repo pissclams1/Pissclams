@@ -4,27 +4,27 @@ export default function HomePage() {
   return <main>
     <section className="wrap hero">
       <div>
-        <p className="kicker">For short-term rental hosts with empty calendar gaps</p>
-        <h1 className="h1">Your calendar has money in it. You just can&apos;t see it.</h1>
-        <p className="lead">GapStay spots the open stretches between bookings, prices them as furnished monthly stays, and gives you a page worth sharing.</p>
+        <p className="kicker">For under-booked Airbnb and VRBO hosts</p>
+        <h1 className="h1">Your empty calendar needs a second plan.</h1>
+        <p className="lead">GapStay watches your calendar, tells you when an open stretch has become a revenue decision, and gives you the furnished-stay marketing page to act on it.</p>
         <div className="actions">
-          <Link className="darkpill" href="/host">Find my gaps</Link>
-          <Link className="pill" href="/listing/sample">See a sample listing</Link>
+          <Link className="darkpill" href="/host">Check my first gap</Link>
+          <Link className="pill" href="/listing/sample">See sample listing</Link>
         </div>
       </div>
       <div className="card pad">
-        <p className="kicker">The missed opportunity</p>
-        <h2 className="big">Airbnb optimizes for nightly bookings.</h2>
-        <p className="muted">A 3-week gap in November is not three weeks of failure. It is a furnished-stay offer you have not made yet.</p>
+        <p className="kicker">Reminder + advisor + page builder</p>
+        <h2 className="big">Do not notice the problem when it is already too late.</h2>
+        <p className="muted">GapStay is built for hosts who are not watching their calendar closely enough and still need the property to make more than a plain yearly rental.</p>
       </div>
     </section>
 
     <section className="sectionline">
       <div className="wrap grid grid4" style={{paddingTop:30,paddingBottom:30}}>
-        <Step title="Finds" text="The gaps worth packaging — not every open date qualifies." />
-        <Step title="Prices" text="A monthly rate that makes sense, not nightly math multiplied by 30." />
-        <Step title="Publishes" text="A clean listing page built for a different kind of guest." />
-        <Step title="Captures" text="Direct inquiries, with no platform cut." />
+        <Step title="Watches" text="Rolling calendar monitoring for long open stretches." />
+        <Step title="Advises" text="Wait, reprice, split, package, or salvage." />
+        <Step title="Packages" text="A furnished-stay offer with dates, price, and positioning." />
+        <Step title="Markets" text="A shareable page plus places to post it." />
       </div>
     </section>
 
@@ -33,7 +33,7 @@ export default function HomePage() {
         <p className="kicker">The number that matters</p>
         <h2 className="big">Highest nightly rate does not pay the mortgage. Highest yearly revenue does.</h2>
         <p className="muted">A high nightly price feels good on the calendar. Empty nights do not. GapStay helps hosts stop measuring the property by the rate they wish they could get and start measuring it by how much money the calendar actually produces.</p>
-        <p className="muted">Sometimes the better move is still waiting for nightly guests. Sometimes the better move is locking in a clean furnished-stay offer before the whole gap turns into zero.</p>
+        <p className="muted">Some dates should stay nightly. Some open blocks should be sold differently. The goal is not to win the ADR screenshot. The goal is to cover the year.</p>
       </div>
       <div className="card pad">
         <h3>The math is not personal</h3>
@@ -41,8 +41,28 @@ export default function HomePage() {
           <li>$250/night for zero nights is still zero.</li>
           <li>A lower monthly rate can beat scattered high-rate weekends.</li>
           <li>Fewer turnovers means less cleaning, less damage risk, and less platform dependency.</li>
-          <li>The goal is not winning the ADR screenshot. The goal is covering the year.</li>
+          <li>The right move depends on the whole block, not one imagined night.</li>
         </ul>
+      </div>
+    </section>
+
+    <section className="sectionline">
+      <div className="wrap section grid grid3">
+        <div className="card pad">
+          <p className="kicker">Sample alert</p>
+          <h3>Your September–October gap is now in the package window.</h3>
+          <p className="muted">It starts in 68 days, is still mostly open, and waiting for scattered nightly bookings is now the riskier bet.</p>
+        </div>
+        <div className="card pad">
+          <p className="kicker">Sample recommendation</p>
+          <h3>Package now. Keep Airbnb live until a tenant is real.</h3>
+          <p className="muted">Create the furnished-stay offer today. Block the dates only after a qualified renter is ready.</p>
+        </div>
+        <div className="card pad">
+          <p className="kicker">Sample collateral</p>
+          <h3>A clean furnished-stay page to post anywhere.</h3>
+          <p className="muted">Dates, total price, monthly equivalent, amenities, rules, and inquiry capture in one shareable link.</p>
+        </div>
       </div>
     </section>
 
@@ -50,78 +70,62 @@ export default function HomePage() {
       <div>
         <p className="kicker">The decision most hosts wait too long to make</p>
         <h2 className="big">When should you stop waiting on Airbnb?</h2>
-        <p className="muted">The point is not to panic because September is empty in June. The point is to know when waiting for nightly bookings is still rational — and when the monthly-stay option is about to disappear.</p>
-        <p className="muted">For a 30- to 60-day gap, the ripcord is usually 60 days before the gap starts. Keep Airbnb live, but build and share the furnished-stay offer before monthly guests have already made other plans.</p>
+        <p className="muted">GapStay does not send generic reminders. It alerts you when an open stretch becomes a revenue decision: long enough to sell as a block, close enough to matter, and still open enough to become expensive.</p>
+        <p className="muted">For a 30- to 60-day gap, the useful action window is usually 60–90 days before the gap starts. Under 30 days is usually salvage, not strategy.</p>
       </div>
       <div className="card pad">
-        <h3>The simple timing rule</h3>
+        <h3>The simple status system</h3>
         <ul className="list">
-          <li><b>90+ days out:</b> watch the gap.</li>
-          <li><b>60–90 days out:</b> package the backup offer.</li>
-          <li><b>45–60 days out:</b> actively share the page.</li>
-          <li><b>30–45 days out:</b> you are late.</li>
-          <li><b>Under 30 days:</b> you are salvaging, not optimizing.</li>
+          <li><b>Watch:</b> too early or demand may still protect the dates.</li>
+          <li><b>Package:</b> build the furnished-stay offer, but keep Airbnb live.</li>
+          <li><b>Act:</b> start posting and outreach now.</li>
+          <li><b>Split:</b> hold high-demand nights and package the rest.</li>
+          <li><b>Salvage:</b> discount, shorten, or chase partial stays.</li>
         </ul>
-      </div>
-    </section>
-
-    <section className="sectionline">
-      <div className="wrap section grid grid2">
-        <div className="card pad">
-          <p className="kicker">Example</p>
-          <h2>September and October are empty.</h2>
-          <p className="muted">If it is June, you do not need to slash your nightly rate. But you should create the backup furnished-stay offer now. By late August, most monthly guests have already solved their housing problem.</p>
-        </div>
-        <div className="card pad">
-          <p className="kicker">Gap status</p>
-          <div className="price">July 1</div>
-          <h3>Pull the ripcord.</h3>
-          <p className="muted">For a September 1 start date, early July is the action window. Waiting until August 30 is not a strategy. It is a missed channel.</p>
-        </div>
       </div>
     </section>
 
     <section className="wrap section grid grid2">
       <div>
-        <p className="kicker">Why this is not a 20-minute DIY project</p>
-        <h2 className="big">The work is not just making a page.</h2>
-        <p className="muted">Figuring out which gaps are worth offering, when to act, what a monthly guest will actually pay, and building something professional enough to forward is a few hours of work for one booking that might not happen. GapStay does it in minutes, and only charges when the page is worth publishing.</p>
+        <p className="kicker">Where GapStay tells you to post</p>
+        <h2 className="big">The page is only useful if you know where to put it.</h2>
+        <p className="muted">When a furnished-stay play makes sense, GapStay gives you a page and points you toward the best channels for that kind of renter.</p>
       </div>
       <div className="card pad">
-        <h3>What the host gets</h3>
+        <h3>Common channels</h3>
         <ul className="list">
-          <li>A faster way to find open dates worth packaging.</li>
-          <li>A clear action window: watch, package, act, or salvage.</li>
-          <li>A monthly-stay price that does not feel random.</li>
-          <li>A shareable listing page for relocation, insurance, work, and between-home stays.</li>
-          <li>Direct inquiries the host owns.</li>
+          <li>Furnished Finder and travel-nurse housing groups.</li>
+          <li>Local Facebook housing, relocation, and sublet groups.</li>
+          <li>Local realtors and people between homes.</li>
+          <li>Hospitals, universities, employers, and contract-worker communities.</li>
+          <li>Insurance displacement and temporary-housing contacts.</li>
         </ul>
       </div>
     </section>
 
     <section id="how" className="wrap section">
       <p className="kicker">How it works</p>
-      <h2 className="big">From open calendar window to shareable furnished-stay offer.</h2>
+      <h2 className="big">From calendar gap to action.</h2>
       <div className="grid grid3" style={{marginTop:22}}>
-        <Feature title="1. Enter your dates" text="Drop in your open window, nightly rate, typical occupancy, and cleaning cost." />
-        <Feature title="2. Get a timing call" text="GapStay shows whether the gap is too early, ready to package, urgent, or already in salvage mode." />
-        <Feature title="3. Publish and share" text="Use a clean listing page you can text, email, or post anywhere. Direct inquiries come straight to you." />
+        <Feature title="1. Check one gap" text="Enter your open window, nightly target, expected occupancy, and cleaning cost." />
+        <Feature title="2. Get the recommendation" text="GapStay shows whether the better move is to wait, reprice, split, package, or salvage." />
+        <Feature title="3. Turn on watch" text="Subscribe so GapStay keeps monitoring the calendar and alerts you before the next gap gets expensive." />
       </div>
     </section>
 
     <section className="wrap section grid grid2">
       <div>
         <p className="kicker">Pricing</p>
-        <h2 className="big">Free to generate. $19 to publish.</h2>
-        <p className="muted">Build the page and see the timing call before you spend a cent. Pay only when you have something worth sharing — for that specific gap, not a monthly subscription.</p>
+        <h2 className="big">Monthly calendar watch. Cancel anytime.</h2>
+        <p className="muted">Start with a free scan. Subscribe when you want GapStay watching the property, advising the next move, and creating the marketing page when it is time to look for a furnished-stay tenant.</p>
       </div>
       <div className="card pad">
-        <div className="price">$19</div>
-        <h3>Manual review + 30-day published listing</h3>
-        <p className="muted">Publish one furnished-stay offer for one specific gap.</p>
+        <div className="price">$49/mo</div>
+        <h3>Calendar Watch for one property</h3>
+        <p className="muted">Rolling calendar monitoring, gap alerts, advisory reports, and shareable furnished-stay pages.</p>
         <div className="actions">
-          <Link className="darkpill" href="/host">Find my gaps</Link>
-          <Link className="pill" href="/listing/sample">See a sample listing</Link>
+          <Link className="darkpill" href="/host">Check my first gap</Link>
+          <Link className="pill" href="/pricing">See pricing</Link>
         </div>
       </div>
     </section>
