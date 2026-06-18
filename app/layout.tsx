@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import "@fontsource-variable/inter";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body>
         <header className="nav">
           <div className="wrap" style={{display:"flex",alignItems:"center",justifyContent:"space-between",width:"100%"}}>
@@ -20,7 +21,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/dashboard">Dashboard</Link>
               <Link href="/host" className="pill">Import listing</Link>
             </nav>
-            <Link href="/host" className="pill mobileOnly">Import listing</Link>
+            <nav className="mobileNav mobileOnly" aria-label="Mobile navigation">
+              <Link href="/#how">How</Link>
+              <Link href="/pricing">Pricing</Link>
+              <Link href="/host" className="pill">Import</Link>
+            </nav>
           </div>
         </header>
         {children}
