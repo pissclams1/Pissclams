@@ -4,12 +4,28 @@ import Link from "next/link";
 import { analyzeGap, money, prettyDate } from "../../lib/pricing";
 import { saveListingRemote, type Listing } from "../../lib/store";
 
+type ImportState = { imported?: boolean; source?: string; title?: string; description?: string; image?: string; note?: string } | null;
+
 export default function HostPage(){
   const [form,setForm]=useState({sourceUrl:"",startDate:"2026-07-03",endDate:"2026-08-14",nightlyTarget:"210",expectedOccupancy:"43",cleaningFee:"195",market:"balanced",title:"Quiet furnished stay with workspace",city:"Marco Island",state:"FL",propertyType:"Condo",bedrooms:"2",bathrooms:"2",hostName:"Host",ownerEmail:"",description:"A furnished mid-term stay with fast Wi-Fi, kitchen, laundry, parking, and transparent all-in pricing."});
   const [listing,setListing]=useState<Listing|null>(null);
   const [saving,setSaving]=useState(false);
+  const [importing,setImporting]=useState(false);
+  const [imported,setImported]=useState<ImportState>(null);
+  const [showManual,setShowManual]=useState(false);
   function update(key:string,value:string){setForm(prev=>({...prev,[key]:value}))}
-  function useSourceUrl(){try{const u=new URL(form.sourceUrl);const checkIn=u.searchParams.get("check_in");const checkOut=u.searchParams.get("check_out");const isAirbnb=u.hostname.includes("airbnb");const isVrbo=u.hostname.includes("vrbo");setForm(prev=>({...prev,startDate:checkIn||prev.startDate,endDate:checkOut||prev.endDate,title:isAirbnb?"Airbnb furnished stay offer":isVrbo?"VRBO furnished stay offer":prev.title,description:`Source listing: ${form.sourceUrl}\n\nA furnished stay offer created from the host's existing listing link. Add the strongest property details before publishing.`}))}catch{alert("Paste a valid Airbnb or VRBO listing URL.")}}
+  async function importSourceUrl(){
+    setImporting(true);
+    try{
+      const response=await fetch("/api/import-listing",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url:form.sourceUrl})});
+      const data=await response.json();
+      if(!data.ok){alert(data.message||"Could not import listing.");return}
+      setImported(data);
+      setForm(prev=>({...prev,startDate:data.startDate||prev.startDate,endDate:data.endDate||prev.endDate,title:data.title||prev.title,description:data.description||prev.description}));
+      setShowManual(true);
+    }catch{alert("Could not import this listing. You can enter the details manually.")}
+    finally{setImporting(false)}
+  }
   async function submit(e:FormEvent){
     e.preventDefault();
     setSaving(true);
@@ -20,9 +36,11 @@ export default function HostPage(){
     setSaving(false);
   }
   return <main className="wrap section topspace"><div className="grid grid2">
-    <div><p className="kicker">Free gap scan</p><h1 className="big">Paste a listing link or enter the gap manually.</h1><p className="muted">Already on Airbnb or VRBO? Paste the listing URL first. GapStay will use the dates in the link when available, then you can finish the details needed to analyze the gap.</p>
-      <div className="card pad grid" style={{marginTop:24, marginBottom:18}}><Field label="Airbnb or VRBO listing URL" value={form.sourceUrl} onChange={v=>update("sourceUrl",v)} required={false}/><button className="pill" type="button" onClick={useSourceUrl}>Use this listing link</button><p className="small">MVP note: this pulls usable dates from the URL when present. Full listing import comes later.</p></div>
-      <form onSubmit={submit} className="card pad grid" style={{marginTop:24}}>
+    <div><p className="kicker">Free gap scan</p><h1 className="big">Paste your Airbnb or VRBO link.</h1><p className="muted">GapStay imports what it can, captures visible dates from the link, and gives you a confirm/edit screen before analysis. Manual entry is only the backup.</p>
+      <div className="card pad grid" style={{marginTop:24, marginBottom:18}}><Field label="Airbnb or VRBO listing URL" value={form.sourceUrl} onChange={v=>update("sourceUrl",v)} required={false}/><button className="darkpill" type="button" onClick={importSourceUrl} disabled={importing}>{importing?"Importing...":"Import listing"}</button><p className="small">Paste a public listing URL. GapStay will import public metadata when available and pull check-in/check-out dates from the link.</p></div>
+      {imported?<div className="card pad" style={{marginBottom:18}}><p className="kicker">Imported from {imported.source||"listing"}</p><h2>{form.title}</h2><p className="muted">{imported.note||"Confirm the details below before analysis."}</p>{imported.image?<img src={imported.image} alt="Imported listing" style={{width:"100%",borderRadius:18,marginTop:12}}/>:null}<div className="result" style={{marginTop:18}}><div className="stat"><span>Start</span><strong>{prettyDate(form.startDate)}</strong></div><div className="stat"><span>End</span><strong>{prettyDate(form.endDate)}</strong></div></div></div>:null}
+      {!showManual?<div className="card pad"><h3>Need to enter it manually?</h3><p className="muted">Use this only if the listing import fails or you do not have a public listing yet.</p><button className="pill" type="button" onClick={()=>setShowManual(true)}>Enter details manually</button></div>:<form onSubmit={submit} className="card pad grid" style={{marginTop:24}}>
+        <p className="kicker">Confirm or edit</p>
         <div className="grid grid2"><Field label="Start date" type="date" value={form.startDate} onChange={v=>update("startDate",v)}/><Field label="End date" type="date" value={form.endDate} onChange={v=>update("endDate",v)}/></div>
         <div className="grid grid3"><Field label="Nightly target" value={form.nightlyTarget} onChange={v=>update("nightlyTarget",v)}/><Field label="Expected occupancy %" value={form.expectedOccupancy} onChange={v=>update("expectedOccupancy",v)}/><Field label="Cleaning fee" value={form.cleaningFee} onChange={v=>update("cleaningFee",v)}/></div>
         <label><span className="label">Market</span><select className="input" value={form.market} onChange={e=>update("market",e.target.value)}><option value="soft">Soft / lots of vacancy</option><option value="balanced">Balanced</option><option value="hot">Hot / scarce inventory</option></select></label>
@@ -31,10 +49,10 @@ export default function HostPage(){
         <div className="grid grid3"><Field label="City" value={form.city} onChange={v=>update("city",v)}/><Field label="State" value={form.state} onChange={v=>update("state",v)}/><Field label="Type" value={form.propertyType} onChange={v=>update("propertyType",v)}/></div>
         <div className="grid grid2"><Field label="Bedrooms" value={form.bedrooms} onChange={v=>update("bedrooms",v)}/><Field label="Bathrooms" value={form.bathrooms} onChange={v=>update("bathrooms",v)}/></div>
         <label><span className="label">Description</span><textarea className="input textarea" value={form.description} onChange={e=>update("description",e.target.value)}/></label>
-        <button className="darkpill" type="submit">{saving?"Saving...":"Run free gap scan"}</button>
-      </form>
+        <button className="darkpill" type="submit">{saving?"Saving...":"Analyze imported listing"}</button>
+      </form>}
     </div>
-    <div className="card pad" style={{alignSelf:"start",position:"sticky",top:96}}>{listing?<Result listing={listing}/>:<p className="muted">Your scan will appear here. It will compare likely short-term revenue against a furnished-stay offer, then show timing status and a sample marketing page.</p>}</div>
+    <div className="card pad" style={{alignSelf:"start",position:"sticky",top:96}}>{listing?<Result listing={listing}/>:<p className="muted">Your scan will appear here after import and confirmation. It will compare likely nightly revenue against a furnished-stay fallback offer.</p>}</div>
   </div></main>
 }
 function Field({label,value,onChange,type="text",required=true}:{label:string;value:string;onChange:(v:string)=>void;type?:string;required?:boolean}){return <label><span className="label">{label}</span><input className="input" type={type} value={value} onChange={e=>onChange(e.target.value)} required={required}/></label>}
