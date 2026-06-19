@@ -20,7 +20,7 @@ export const sampleListing: Listing = {
   publishStatus: "published",
   amenities: ["Fast Wi-Fi", "Workspace", "Full kitchen", "Laundry", "Parking", "Utilities included"],
   rules: ["No smoking", "Pets considered", "Quiet hours after 10 PM", "Normal checkout cleaning only"],
-  analysis: { id: "sample-gap", startDate: "2026-07-03", endDate: "2026-08-14", nights: 42, fullNightRevenue: 8820, likelyShortTermRevenue: 3780, likelyBookedNights: 18, recommendedNightly: 92, recommendedTotal: 3864, monthlyEquivalent: 2760, turnoverSavings: 585, certaintyScore: 90, explanation: ["42 open nights can be packaged as one furnished stay.", "The offer beats likely short-term revenue while reducing guest turnover.", "All-in pricing is easier for guests to trust."] }
+  analysis: { id: "sample-gap", startDate: "2026-07-03", endDate: "2026-08-14", nights: 42, fullNightRevenue: 8820, likelyShortTermRevenue: 3780, likelyBookedNights: 18, recommendedNightly: 92, recommendedTotal: 3864, monthlyEquivalent: 2760, turnoverSavings: 585, certaintyScore: 90, fillProbability: 0.43, recommendation: "furnished", explanation: ["42 open nights can be packaged as one furnished stay.", "The offer beats likely short-term revenue while reducing guest turnover.", "All-in pricing is easier for guests to trust."] }
 };
 const listingsKey = "gapstay:listings";
 const inquiriesKey = "gapstay:inquiries";
