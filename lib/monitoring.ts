@@ -12,6 +12,7 @@ export type MonitorInput = {
   bathrooms?: number;
   nightlyRate?: number;
   cleaningFee?: number;
+  marketMonthlyRent?: number;
 };
 
 export type MonitorFinding = {
@@ -48,11 +49,15 @@ export async function evaluateMonitor(input: MonitorInput): Promise<{ ok: boolea
       cleaningFee: Number(input.cleaningFee || 150),
       market: marketSignal.recommendation === "furnished" ? "soft" : "balanced",
       fillProbability: marketSignal.fillProbability,
-      marketLabel: marketSignal.marketLabel
+      marketLabel: marketSignal.marketLabel,
+      bedrooms: Number(input.bedrooms || 2),
+      city: input.city,
+      state: input.state,
+      marketMonthlyRent: input.marketMonthlyRent
     });
     const shouldAlert = analysis.recommendation === "furnished" && gap.nights >= 14 && startDays <= 90;
     const alertReason = shouldAlert
-      ? `${gap.nights} open nights start in ${startDays} days and the furnished-stay offer beats likely short-stay revenue.`
+      ? `${gap.nights} open nights start in ${startDays} days. Comparable unfurnished rent is ${analysis.marketMonthlyRent}/mo; the furnished-stay offer beats likely short-stay revenue.`
       : "No urgent intervention needed yet.";
     return {
       gap: { startDate: gap.start, endDate: gap.end, nights: gap.nights, daysUntil: startDays },
