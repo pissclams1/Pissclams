@@ -13,6 +13,6 @@ export default function PricingPage(){
     <h1 className="big">Start with the gap. Pay when you want to act on it.</h1>
     <p className="lead" style={{fontSize:18}}>Every plan starts with the same question: which use of the entire open window produces the most revenue?</p>
     <div className="grid grid4 pricingGrid">{plans.map(plan=><div className={`priceCard${plan.featured?" featuredPrice":""}`} key={plan.name}><p className="kicker">{plan.name}</p><div className="price">{plan.price}</div><p className="muted">{plan.text}</p><Link className={plan.featured?"darkpill":"pill"} href={plan.href}>{plan.cta}</Link></div>)}</div>
-    <p className="successBox" style={{maxWidth:760,margin:"18px auto 0",textAlign:"center"}}>Most hosts start with one analysis. Calendar Watch is for hosts who never want to miss another gap.</p>
+    <p className="successBox" style={{maxWidth:760,margin:"18px auto 0",textAlign:"center"}}>One analysis solves today&apos;s gap. Calendar Watch helps prevent the next one.</p>
   </main>;
 }

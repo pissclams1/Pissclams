@@ -15,8 +15,8 @@ export default function HomePage() {
         <Link className="manualLink" href="/host#manual">Enter details manually</Link>
       </div>
       <div className="thesisCard">
-        <p>One open block. Two ways to earn.</p>
-        <strong>Compare likely short stays with one furnished-stay offer.</strong>
+        <p>One open block. One revenue decision.</p>
+        <strong>See whether waiting for short stays or packaging the whole gap is likely to produce more revenue.</strong>
         <div className="calendarVisual" aria-hidden="true">
           <span>Booked</span><span>Booked</span><span className="gapBlock">42-night gap</span><span>Booked</span>
         </div>
@@ -54,7 +54,7 @@ export default function HomePage() {
         <Price name="Calendar Watch" price="$49/month" cta="Analyze my property" href="/host" featured />
         <Price name="Portfolio Watch" price="$99/month" cta="Analyze my portfolio" href="/host" />
       </div>
-      <p className="successBox" style={{maxWidth:760,margin:"18px auto 0",textAlign:"center"}}>Most hosts start with one analysis. Calendar Watch is for hosts who never want to miss another gap.</p>
+      <p className="successBox" style={{maxWidth:760,margin:"18px auto 0",textAlign:"center"}}>One analysis solves today&apos;s gap. Calendar Watch helps prevent the next one.</p>
     </section>
   </main>;
 }
