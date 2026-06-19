@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <footer className="footer">
           <div className="wrap footerGrid">
-            <div><Link href="/" className="brand">GapStay</Link><p>Help Airbnb and VRBO hosts earn more revenue from the gaps between bookings.</p></div>
+            <div><Link href="/" className="brand">GapStay</Link><p>Helps Airbnb and VRBO hosts earn more revenue from the gaps between bookings.</p></div>
             <div><strong>Product</strong><Link href="/#how">How it works</Link><Link href="/pricing">Pricing</Link><Link href="/dashboard">Dashboard</Link><Link href="/host">Analyze a gap</Link></div>
             <div><strong>Legal</strong><Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms of Service</Link></div>
             <div><strong>Contact</strong><a href="mailto:support@gapstay.com">support@gapstay.com</a></div>
