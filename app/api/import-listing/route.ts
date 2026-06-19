@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { fetchCalendar, extractListingId } from "../../../lib/ical";
+import { detectMarket, getMarketLabel } from "../../../lib/market-intelligence";
 
 function textBetween(html: string, pattern: RegExp) {
   const match = html.match(pattern);
@@ -40,8 +42,10 @@ function extractSignals(html: string, title: string, description: string) {
   const bedrooms = findFirst(haystack, [/(\d{1,2})\s+bedrooms?/i, /(\d{1,2})\s+beds?/i]);
   const bathrooms = findFirst(haystack, [/(\d{1,2}(?:\.5)?)\s+bathrooms?/i, /(\d{1,2}(?:\.5)?)\s+baths?/i]);
   const nightly = findFirst(haystack, [/$\s?(\d{2,5})\s+(?:night|per night)/i, /"price"\s*:\s*"?(\d{2,5})/i]);
+  const city = findFirst(haystack, [/"city"\s*:\s*"([^"]+)"/i, /,\s*([A-Z][a-z]+(?:\s[A-Z][a-z]+)?),\s*[A-Z]{2}/]);
+  const state = findFirst(haystack, [/"state"\s*:\s*"([A-Z]{2})"/i, /,\s*([A-Z]{2})\s+\d{5}/]);
   const unavailableMentions = (haystack.match(/unavailable|reserved|booked|blocked/gi) || []).length;
-  return { rating, reviews, guests, bedrooms, bathrooms, nightly, unavailableMentions };
+  return { rating, reviews, guests, bedrooms, bathrooms, nightly, city, state, unavailableMentions };
 }
 
 export async function POST(request: Request) {
@@ -57,7 +61,15 @@ export async function POST(request: Request) {
   }
 
   const source = inferSource(url.hostname);
-  const dates = parseDates(url);
+  const urlDates = parseDates(url);
+  const listingId = extractListingId(rawUrl);
+  const calendarResult = listingId ? await fetchCalendar(rawUrl) : null;
+
+  let title = `${source} furnished stay offer`;
+  let description = `Source listing: ${rawUrl}`;
+  let image = "";
+  let signals: ReturnType<typeof extractSignals> = { rating: "", reviews: "", guests: "", bedrooms: "", bathrooms: "", nightly: "", city: "", state: "", unavailableMentions: 0 };
+  let imported = false;
 
   try {
     const response = await fetch(rawUrl, {
@@ -67,48 +79,44 @@ export async function POST(request: Request) {
       },
       next: { revalidate: 0 }
     });
-    const html = await response.text();
-    if (!response.ok) {
-      return NextResponse.json({
-        ok: true,
-        source,
-        sourceUrl: rawUrl,
-        imported: false,
-        title: `${source} furnished stay offer`,
-        description: `A furnished stay imported from a public ${source} listing. Confirm the details before analysis.`,
-        signals: {},
-        ...dates,
-        note: "The listing page limited public metadata, but dates from the URL were captured. Confirm the details before analysis."
-      });
+    if (response.ok) {
+      const html = await response.text();
+      title = meta(html, "og:title") || textBetween(html, /<title[^>]*>(.*?)<\/title>/i) || title;
+      description = meta(html, "og:description") || meta(html, "description") || description;
+      image = meta(html, "og:image");
+      signals = extractSignals(html, title, description);
+      imported = true;
     }
-    const title = meta(html, "og:title") || textBetween(html, /<title[^>]*>(.*?)<\/title>/i) || `${source} furnished stay offer`;
-    const description = meta(html, "og:description") || meta(html, "description") || `Imported from ${source}: ${rawUrl}`;
-    const image = meta(html, "og:image");
-    const signals = extractSignals(html, title, description);
+  } catch {}
 
-    return NextResponse.json({
-      ok: true,
-      source,
-      sourceUrl: rawUrl,
-      imported: true,
-      title,
-      description,
-      image,
-      signals,
-      ...dates,
-      note: "Imported public listing metadata and visible signals. Confirm the details before analysis."
-    });
-  } catch {
-    return NextResponse.json({
-      ok: true,
-      source,
-      sourceUrl: rawUrl,
-      imported: false,
-      title: `${source} furnished stay offer`,
-      description: `Source listing: ${rawUrl}`,
-      signals: {},
-      ...dates,
-      note: "The listing page could not be fetched, but dates from the URL were captured when present. Confirm the details before analysis."
-    });
-  }
+  const marketKey = detectMarket(rawUrl, signals.city || "", signals.state || "");
+  const marketLabel = getMarketLabel(marketKey);
+  const nextGap = calendarResult?.nextGap || null;
+  const startDate = nextGap?.start || urlDates.startDate;
+  const endDate = nextGap?.end || urlDates.endDate;
+
+  return NextResponse.json({
+    ok: true,
+    source,
+    sourceUrl: rawUrl,
+    listingId,
+    imported,
+    title,
+    description,
+    image,
+    signals,
+    calendarOk: calendarResult?.ok || false,
+    gaps: calendarResult?.gaps || [],
+    nextGap,
+    bookedRanges: calendarResult?.bookedRanges || [],
+    startDate,
+    endDate,
+    marketKey,
+    marketLabel,
+    note: calendarResult?.ok
+      ? `Read ${(calendarResult?.gaps || []).length} open gap(s) from the calendar feed. Showing the next actionable window.`
+      : startDate
+        ? "Dates came from the listing URL. Confirm the gap before analysis."
+        : "Calendar feed was unavailable. Confirm or enter the open dates below."
+  });
 }
