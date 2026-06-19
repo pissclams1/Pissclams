@@ -4,7 +4,7 @@ export default function HomePage() {
   return <main>
     <section className="wrap hero heroPrimary">
       <div>
-        <h1 className="h1">Your rental is leaving money on the table. GapStay helps you find it.</h1>
+        <h1 className="h1">Your rental can earn more revenue. GapStay finds it.</h1>
         <p className="lead">GapStay helps Airbnb and VRBO hosts maximize revenue from the gaps between bookings.</p>
         <form className="importBar" action="/host" method="get">
           <label className="srOnly" htmlFor="listing-url">Airbnb or VRBO listing URL</label>
