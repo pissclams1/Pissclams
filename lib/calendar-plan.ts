@@ -33,6 +33,9 @@ export type CalendarPlan = {
   };
 };
 
+const MIN_FURNISHED_NIGHTS = 14;
+const MIN_FURNISHED_NIGHTS_BETWEEN_AIRBNB = 21;
+
 function ymd(date: Date) { return date.toISOString().slice(0, 10); }
 function monthKey(date: Date) { return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`; }
 function addDays(date: Date, days: number) { return new Date(date.getTime() + days * 86400000); }
@@ -68,6 +71,33 @@ function reasonFor(decision: CalendarDecision, eventReason: string, eventBoost: 
   return "short-stay demand signals are too weak to justify waiting";
 }
 
+function buildRanges(days: CalendarDayPlan[]): CalendarRangePlan[] {
+  const ranges: CalendarRangePlan[] = [];
+  for (const day of days) {
+    const last = ranges[ranges.length - 1];
+    if (!last || last.decision !== day.decision || last.reason !== day.reason) ranges.push({ startDate: day.date, endDate: day.date, nights: 1, decision: day.decision, confidence: day.confidence, reason: day.reason });
+    else { last.endDate = day.date; last.nights += 1; last.confidence = Math.round((last.confidence * (last.nights - 1) + day.confidence) / last.nights); }
+  }
+  return ranges;
+}
+
+function suppressImpracticalFurnishedIslands(days: CalendarDayPlan[]) {
+  const ranges = buildRanges(days);
+  for (const range of ranges) {
+    if (range.decision !== "FURNISHED") continue;
+    const startIndex = days.findIndex(day => day.date === range.startDate);
+    const endIndex = days.findIndex(day => day.date === range.endDate);
+    const prev = startIndex > 0 ? days[startIndex - 1]?.decision : null;
+    const next = endIndex >= 0 && endIndex < days.length - 1 ? days[endIndex + 1]?.decision : null;
+    const betweenAirbnb = prev === "AIRBNB" && next === "AIRBNB";
+    const tooShort = range.nights < MIN_FURNISHED_NIGHTS || (betweenAirbnb && range.nights < MIN_FURNISHED_NIGHTS_BETWEEN_AIRBNB);
+    if (!tooShort) continue;
+    for (let i = startIndex; i <= endIndex; i++) {
+      days[i] = { ...days[i], decision: "WATCH", confidence: Math.min(days[i].confidence, 72), reason: betweenAirbnb ? "too short to justify leaving Airbnb protection between strong short-stay windows" : "too short to market as a furnished-stay block" };
+    }
+  }
+}
+
 export function buildCalendarPlan(input: { sourceUrl: string; city?: string; state?: string; horizonDays?: number }) : CalendarPlan {
   const horizon = Math.min(365, Math.max(30, input.horizonDays || 365));
   const start = new Date(); start.setHours(12, 0, 0, 0);
@@ -84,13 +114,8 @@ export function buildCalendarPlan(input: { sourceUrl: string; city?: string; sta
     days.push({ date: dateStr, decision, confidence: confidenceFor(decision, adjusted), reason: reasonFor(decision, event.reason, event.boost, signal.isPeakSeason), monthKey: monthKey(date) });
   }
 
-  const ranges: CalendarRangePlan[] = [];
-  for (const day of days) {
-    const last = ranges[ranges.length - 1];
-    if (!last || last.decision !== day.decision || last.reason !== day.reason) ranges.push({ startDate: day.date, endDate: day.date, nights: 1, decision: day.decision, confidence: day.confidence, reason: day.reason });
-    else { last.endDate = day.date; last.nights += 1; last.confidence = Math.round((last.confidence * (last.nights - 1) + day.confidence) / last.nights); }
-  }
-
+  suppressImpracticalFurnishedIslands(days);
+  const ranges = buildRanges(days);
   const airbnbDays = days.filter(d => d.decision === "AIRBNB").length;
   const watchDays = days.filter(d => d.decision === "WATCH").length;
   const furnishedDays = days.filter(d => d.decision === "FURNISHED").length;
