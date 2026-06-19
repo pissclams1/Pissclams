@@ -20,7 +20,7 @@ export default async function PaymentSuccessPage({ searchParams }: { searchParam
       <p className="muted">{published ? "Share the public page anywhere furnished renters look. New inquiries will appear in your dashboard." : "Return to your analysis and try checkout again, or contact support if you were charged."}</p>
       <div className="actions">
         {published && listingId ? <Link className="darkpill" href={`/listing/${listingId}`}>Open public listing</Link> : <Link className="darkpill" href="/host">Return to analysis</Link>}
-        <Link className="pill" href="/dashboard">Open dashboard</Link>
+        <Link className="pill" href={`/auth?next=/dashboard${session?.customer_details?.email?`&email=${encodeURIComponent(session.customer_details.email)}`:""}`}>Create account or sign in</Link>
       </div>
     </div>
   </main>

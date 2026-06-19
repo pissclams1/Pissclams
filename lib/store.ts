@@ -46,6 +46,10 @@ export function getOwnerToken() {
   return token;
 }
 
+export function setOwnerToken(token:string){
+  if(typeof window!=="undefined"&&token) localStorage.setItem("gapstay:owner-token",token);
+}
+
 export async function saveListingRemote(listing: Listing, ownerEmail?: string) {
   const response = await fetch("/api/listings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ listing, ownerEmail, ownerToken: getOwnerToken() }) });
   const data = await response.json().catch(() => ({}));

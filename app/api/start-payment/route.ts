@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { planMode, priceMap, stripe } from "../../../lib/stripe";
+import { getRequestUser, isAdminEmail } from "../../../lib/auth-server";
+import { grantListingAccess } from "../../../lib/gapstay-server";
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => ({}));
@@ -16,6 +18,12 @@ export async function POST(request: Request) {
   const price = priceMap[plan];
   if (!price) return NextResponse.json({ ok: false, message: `Missing price for ${plan}.` }, { status: 400 });
   if (plan === "publish_gap" && (!listingId || !ownerToken)) return NextResponse.json({ ok: false, message: "Analyze and save a listing before publishing." }, { status: 400 });
+
+  const user=await getRequestUser(request);
+  if(plan==="publish_gap"&&isAdminEmail(user?.email)){
+    await grantListingAccess(listingId,ownerToken);
+    return NextResponse.json({ok:true,url:`${origin}/listing/${encodeURIComponent(listingId)}`,adminAccess:true});
+  }
 
   const session = await stripe.checkout.sessions.create({
     mode: planMode(plan),

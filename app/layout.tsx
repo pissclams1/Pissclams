@@ -19,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/#how">How it works</Link>
               <Link href="/pricing">Pricing</Link>
               <Link href="/dashboard">Dashboard</Link>
+              <Link href="/auth">Sign in</Link>
               <Link href="/host" className="pill">Import listing</Link>
             </nav>
             <nav className="mobileNav mobileOnly" aria-label="Mobile navigation">
@@ -30,10 +31,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         {children}
         <footer className="footer">
-          <div className="wrap" style={{display:"flex",justifyContent:"space-between",gap:16,flexWrap:"wrap"}}>
-            <span>GapStay — more revenue from the gaps between bookings.</span>
-            <span>The whole gap is the number that matters.</span>
+          <div className="wrap footerGrid">
+            <div><Link href="/" className="brand">GapStay</Link><p>Help Airbnb and VRBO hosts earn more revenue from the gaps between bookings.</p></div>
+            <div><strong>Product</strong><Link href="/#how">How it works</Link><Link href="/pricing">Pricing</Link><Link href="/dashboard">Dashboard</Link><Link href="/host">Analyze a gap</Link></div>
+            <div><strong>Legal</strong><Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms of Service</Link></div>
+            <div><strong>Contact</strong><a href="mailto:support@gapstay.com">support@gapstay.com</a></div>
           </div>
+          <div className="wrap footerBottom">© 2026 GapStay</div>
         </footer>
       </body>
     </html>

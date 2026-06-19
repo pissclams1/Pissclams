@@ -39,3 +39,9 @@ export async function finalizePaidListing(input: { listingId: string; ownerToken
   });
   if (!paymentResponse.ok) throw new Error(`Could not record payment: ${await paymentResponse.text()}`);
 }
+
+export async function grantListingAccess(listingId:string,ownerToken:string){
+  const paidUntil=new Date(Date.now()+10*365*24*60*60*1000).toISOString();
+  const response=await fetch(gapStayRest(`gapstay_listings?id=eq.${encodeURIComponent(listingId)}`),{method:"PATCH",headers:gapStayHeaders(ownerToken),body:JSON.stringify({publish_status:"published",paid_until:paidUntil,plan_code:"admin"})});
+  if(!response.ok) throw new Error(`Could not grant listing access: ${await response.text()}`);
+}
