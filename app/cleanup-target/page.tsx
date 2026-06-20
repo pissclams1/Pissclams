@@ -1,0 +1,1 @@
+export default function TargetPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Target Buyer</h1><p>Overloaded bookkeepers and small CPA firms with cleanup overflow.</p></main>}
