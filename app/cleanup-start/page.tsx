@@ -1,0 +1,1 @@
+export default function CleanupStartPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Start</h1><p>Start with /intake.</p></main>}
