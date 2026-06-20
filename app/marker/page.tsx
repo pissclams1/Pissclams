@@ -1,0 +1,1 @@
+export default function MarkerPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Marker</h1><p>Build marker committed.</p></main>}
