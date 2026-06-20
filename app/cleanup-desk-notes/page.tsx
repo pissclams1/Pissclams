@@ -1,0 +1,1 @@
+export default function NotesPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Build Notes</h1><p>GapStay has been extended into Cleanup Desk with intake, packet API, admin stub, demo, and sample CSV.</p></main>}
