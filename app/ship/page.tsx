@@ -1,0 +1,1 @@
+export default function ShipPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk MVP</h1><p>Build shipped to the GapStay source repo.</p></main>}
