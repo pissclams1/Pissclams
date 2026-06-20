@@ -1,0 +1,1 @@
+export default function CleanupSalesPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Sales</h1><p>Sell to bookkeepers as overflow cleanup prep, not bookkeeping replacement.</p></main>}
