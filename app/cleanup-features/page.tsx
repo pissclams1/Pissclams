@@ -1,0 +1,1 @@
+export default function FeaturesPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Features</h1><p>CSV parsing, vendor suggestions, category suggestions, review flags, client questions, packet JSON, intake, admin stub.</p></main>}
