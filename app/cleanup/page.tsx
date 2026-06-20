@@ -1,0 +1,1 @@
+export default function CleanupPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk</h1><p>Routes added: /intake, /cleanup-admin, /review-packet, /api/cleanup-jobs.</p></main>}
