@@ -1,0 +1,1 @@
+export default function PacketPreviewPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Packet Preview</h1><ul><li>Missing months</li><li>Duplicate-looking transactions</li><li>Vendor normalization</li><li>Client questions</li><li>Reviewer notes</li></ul></main>}
