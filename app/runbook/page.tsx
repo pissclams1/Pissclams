@@ -1,0 +1,1 @@
+export default function RunbookPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Runbook</h1><p>Get CSV from bookkeeper. Submit intake. Review JSON packet. Bookkeeper makes final accounting decisions.</p></main>}
