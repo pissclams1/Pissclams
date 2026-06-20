@@ -1,0 +1,1 @@
+export default function WorkflowPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Workflow</h1><p>Upload the mess. Generate the packet. Human reviewer makes final decisions.</p></main>}
