@@ -1,0 +1,1 @@
+export default function IntakePage(){return <main style={{padding:40,fontFamily:'system-ui'}}>Cleanup Desk intake is ready. POST CSV jobs to /api/cleanup-jobs.</main>}
