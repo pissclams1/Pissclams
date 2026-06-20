@@ -1,0 +1,1 @@
+export default function CleanupCheckPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Check</h1><p>Cleanup Desk build check route.</p></main>}
