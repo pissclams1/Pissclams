@@ -1,0 +1,1 @@
+export default function CleanupAdminPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Admin</h1><p>Use /api/cleanup-jobs to generate review packets from transaction CSVs. The next build step is persisted job storage and reviewer queue.</p></main>}
