@@ -1,0 +1,1 @@
+export default function ScopePage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Scope</h1><p>Prep only: parse, group, flag, question. No closing books. No tax advice.</p></main>}
