@@ -1,0 +1,1 @@
+export default function TestPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Test</h1><p>Test the status route at /api/status and the job route at /api/cleanup-jobs.</p></main>}
