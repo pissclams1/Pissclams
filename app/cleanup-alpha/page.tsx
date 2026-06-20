@@ -1,0 +1,1 @@
+export default function CleanupAlphaPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Alpha</h1><p>Alpha implementation has been committed.</p></main>}
