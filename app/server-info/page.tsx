@@ -1,0 +1,1 @@
+export default function ServerInfoPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Server Info</h1><p>Cleanup job packet route has been added.</p></main>}
