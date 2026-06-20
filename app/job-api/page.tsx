@@ -1,0 +1,1 @@
+export default function JobApiPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Job API</h1><p>The cleanup job API is available at the cleanup jobs route.</p></main>}
