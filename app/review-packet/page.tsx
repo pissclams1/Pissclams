@@ -1,0 +1,1 @@
+export default function ReviewPacketPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Review Packet</h1><p>This is the placeholder front end for generated cleanup packets. The backend currently returns packet JSON.</p></main>}
