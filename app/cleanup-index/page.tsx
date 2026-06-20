@@ -1,0 +1,1 @@
+export default function CleanupIndexPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Index</h1><p>Use /intake to create a cleanup job and /api/cleanup-jobs for packet generation.</p></main>}
