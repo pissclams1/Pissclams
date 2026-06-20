@@ -4,8 +4,8 @@ import "@fontsource-variable/inter";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GapStay — Find the revenue in your booking gaps",
-  description: "GapStay helps Airbnb and VRBO hosts maximize revenue from the gaps between bookings."
+  title: "Cleanup Desk — Overflow cleanup prep for bookkeepers",
+  description: "Cleanup Desk turns messy client files into review-ready packets for overloaded bookkeepers and small CPA firms."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -14,30 +14,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <header className="nav">
           <div className="wrap" style={{display:"flex",alignItems:"center",justifyContent:"space-between",width:"100%"}}>
-            <Link href="/" className="brand">GapStay</Link>
+            <Link href="/" className="brand">Cleanup Desk</Link>
             <nav className="navlinks">
               <Link href="/#how">How it works</Link>
-              <Link href="/pricing">Pricing</Link>
-              <Link href="/dashboard">Dashboard</Link>
-              <Link href="/auth">Sign in</Link>
-              <Link href="/host" className="pill">Import listing</Link>
+              <Link href="/packet-preview">Packet</Link>
+              <Link href="/cleanup-admin">Admin</Link>
+              <Link href="/intake" className="pill">Start intake</Link>
             </nav>
             <nav className="mobileNav mobileOnly" aria-label="Mobile navigation">
               <Link href="/#how">How</Link>
-              <Link href="/pricing">Pricing</Link>
-              <Link href="/host" className="pill">Import</Link>
+              <Link href="/packet-preview">Packet</Link>
+              <Link href="/intake" className="pill">Intake</Link>
             </nav>
           </div>
         </header>
         {children}
         <footer className="footer">
           <div className="wrap footerGrid">
-            <div><Link href="/" className="brand">GapStay</Link><p>Helps Airbnb and VRBO hosts earn more revenue from the gaps between bookings.</p></div>
-            <div><strong>Product</strong><Link href="/#how">How it works</Link><Link href="/pricing">Pricing</Link><Link href="/dashboard">Dashboard</Link><Link href="/host">Analyze a gap</Link></div>
-            <div><strong>Legal</strong><Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms of Service</Link></div>
-            <div><strong>Contact</strong><a href="mailto:support@gapstay.com">support@gapstay.com</a></div>
+            <div><Link href="/" className="brand">Cleanup Desk</Link><p>Overflow cleanup prep for bookkeepers and small CPA firms.</p></div>
+            <div><strong>Product</strong><Link href="/#how">How it works</Link><Link href="/packet-preview">Packet preview</Link><Link href="/intake">Start intake</Link><Link href="/cleanup-admin">Admin</Link></div>
+            <div><strong>Boundary</strong><Link href="/cleanup-boundary">Professional boundary</Link><Link href="/reviewer">Reviewer role</Link></div>
+            <div><strong>Contact</strong><a href="mailto:support@cleanupdesk.com">support@cleanupdesk.com</a></div>
           </div>
-          <div className="wrap footerBottom">© 2026 GapStay</div>
+          <div className="wrap footerBottom">© 2026 Cleanup Desk</div>
         </footer>
       </body>
     </html>
