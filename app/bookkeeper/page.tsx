@@ -1,0 +1,1 @@
+export default function BookkeeperPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>For Bookkeepers</h1><p>Overflow prep for cleanup jobs.</p></main>}
