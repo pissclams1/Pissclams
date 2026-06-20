@@ -1,0 +1,1 @@
+export default function QueuePage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Queue</h1><p>Reviewer queue placeholder. Next step is persistent job storage.</p></main>}
