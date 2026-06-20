@@ -1,0 +1,1 @@
+export default function AboutPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>About Cleanup Desk</h1><p>Overflow cleanup prep for bookkeepers and small CPA firms.</p></main>}
