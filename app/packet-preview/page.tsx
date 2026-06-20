@@ -1,1 +1,8 @@
-export default function PacketPreviewPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Packet Preview</h1><ul><li>Missing months</li><li>Duplicate-looking transactions</li><li>Vendor normalization</li><li>Client questions</li><li>Reviewer notes</li></ul></main>}
+const sections = [
+  ["1. File inventory", "Files received, date ranges detected, account names inferred, and missing months that block clean setup."],
+  ["2. Staged rows", "Normalized rows with date, description, amount, inferred vendor, duplicate-risk flag, and reviewer-only category hint."],
+  ["3. Client question list", "Questions grouped by priority so the firm can request only what is needed instead of sending a giant spreadsheet."],
+  ["4. Reviewer notes", "Items that should not be finalized until a professional reviewer resolves the issue."],
+];
+
+export default function PacketPreviewPage(){return <main className="wrap section"><div className="sectionIntro"><p className="kicker">Packet preview</p><h1 className="big">The output is a pre-ledger cleanup workpaper.</h1><p className="muted">Cleanup Desk does not replace connected QBO/Xero transaction tools. It prepares the messy intake bundle before the reviewer imports, reconciles, or corrects anything.</p></div><div className="grid grid2">{sections.map(([title,body])=><div className="card pad" key={title}><h2 style={{marginTop:0}}>{title}</h2><p className="muted">{body}</p></div>)}</div><section className="card pad" style={{marginTop:24}}><p className="kicker">Sample reviewer warning</p><h2>Do not import yet.</h2><p className="muted">The file appears to be missing March activity and has duplicate-looking rows between two accounts. Request the missing record and reviewer context before staging final rows.</p></section></main>}
