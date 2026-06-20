@@ -1,0 +1,1 @@
+export default function NextPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Next Build</h1><p>Add Supabase job persistence, auth, reviewer queue, packet HTML view, Stripe checkout, and file storage.</p></main>}
