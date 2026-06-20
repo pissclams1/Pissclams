@@ -1,0 +1,1 @@
+export default function PingCleanup(){return <main style={{padding:40,fontFamily:'system-ui'}}>cleanup-desk ping</main>}
