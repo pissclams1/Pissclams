@@ -1,0 +1,1 @@
+export default function BoundaryPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Professional Boundary</h1><p>Cleanup Desk prepares review packets only. It does not provide bookkeeping, accounting, tax advice, certification, or filings.</p></main>}
