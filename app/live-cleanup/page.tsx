@@ -1,0 +1,1 @@
+export default function LiveCleanupPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Live</h1><p>Cleanup Desk route marker.</p></main>}
