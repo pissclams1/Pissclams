@@ -4,8 +4,8 @@ import "@fontsource-variable/inter";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Cleanup Desk — Overflow cleanup prep for bookkeepers",
-  description: "Cleanup Desk turns messy client files into review-ready packets for overloaded bookkeepers and small CPA firms."
+  title: "Cleanup Desk — Pre-ledger cleanup prep",
+  description: "Cleanup Desk turns raw client records into review-ready cleanup packets for catch-up bookkeeping firms before QBO or Xero setup."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <footer className="footer">
           <div className="wrap footerGrid">
-            <div><Link href="/" className="brand">Cleanup Desk</Link><p>Overflow cleanup prep for bookkeepers and small CPA firms.</p></div>
+            <div><Link href="/" className="brand">Cleanup Desk</Link><p>Pre-ledger cleanup prep for catch-up bookkeeping and QuickBooks cleanup firms.</p></div>
             <div><strong>Product</strong><Link href="/#how">How it works</Link><Link href="/packet-preview">Packet preview</Link><Link href="/intake">Start intake</Link><Link href="/cleanup-admin">Admin</Link></div>
             <div><strong>Boundary</strong><Link href="/cleanup-boundary">Professional boundary</Link><Link href="/reviewer">Reviewer role</Link></div>
             <div><strong>Contact</strong><a href="mailto:support@cleanupdesk.com">support@cleanupdesk.com</a></div>
