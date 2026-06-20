@@ -1,0 +1,1 @@
+export default function VersionPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Version</h1><p>mvp-1</p></main>}
