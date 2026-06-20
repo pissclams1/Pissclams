@@ -1,0 +1,1 @@
+export default function PricingPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Pricing</h1><p>Light prep 299. Standard packet 799. Heavy packet 1499 plus.</p></main>}
