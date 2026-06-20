@@ -1,0 +1,1 @@
+export default function UploadPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Upload</h1><p>Use /intake for the first MVP upload form.</p></main>}
