@@ -1,0 +1,1 @@
+export default function FileStatusPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>File Status</h1><p>Cleanup Desk file set added.</p></main>}
