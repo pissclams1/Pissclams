@@ -1,9 +1,13 @@
-name: Deploy GapStay to Vercel
+name: Deploy AdStake to Vercel
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
+
+env:
+  VERCEL_ORG_ID: team_0VHABAqetnyUtRocnvmPUkkq
+  VERCEL_PROJECT_ID: prj_NvabGjoylrXVScMl0MNR6I49XXhZ
 
 jobs:
   deploy:
