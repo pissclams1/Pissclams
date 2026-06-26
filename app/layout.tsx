@@ -1,42 +1,61 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import "@fontsource-variable/inter";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Cleanup Desk — Pre-ledger cleanup prep",
-  description: "Cleanup Desk turns raw client records into review-ready cleanup packets for catch-up bookkeeping firms before QBO or Xero setup."
+  title: "AdStake — Find and keep the money your ads are wasting",
+  description: "AdStake finds wasted spend in your Google and Meta ad accounts. Free audit in 60 seconds — you keep 80% of every dollar saved."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en">
+      <head>
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>
-        <header className="nav">
-          <div className="wrap" style={{display:"flex",alignItems:"center",justifyContent:"space-between",width:"100%"}}>
-            <Link href="/" className="brand">Cleanup Desk</Link>
-            <nav className="navlinks">
-              <Link href="/#how">How it works</Link>
-              <Link href="/packet-preview">Packet</Link>
-              <Link href="/cleanup-admin">Admin</Link>
-              <Link href="/intake" className="pill">Start intake</Link>
-            </nav>
-            <nav className="mobileNav mobileOnly" aria-label="Mobile navigation">
-              <Link href="/#how">How</Link>
-              <Link href="/packet-preview">Packet</Link>
-              <Link href="/intake" className="pill">Intake</Link>
+        <header className="as-nav">
+          <div className="as-wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+            <Link href="/" className="as-brand">AdStake</Link>
+            <nav className="as-navlinks">
+              <Link href="#how">How it works</Link>
+              <Link href="#pricing">Pricing</Link>
+              <Link href="#">Contact</Link>
+              <Link href="#">Sign in</Link>
+              <Link href="/connect" className="as-navcta">Get free audit</Link>
             </nav>
           </div>
         </header>
         {children}
-        <footer className="footer">
-          <div className="wrap footerGrid">
-            <div><Link href="/" className="brand">Cleanup Desk</Link><p>Pre-ledger cleanup prep for catch-up bookkeeping and QuickBooks cleanup firms.</p></div>
-            <div><strong>Product</strong><Link href="/#how">How it works</Link><Link href="/packet-preview">Packet preview</Link><Link href="/intake">Start intake</Link><Link href="/cleanup-admin">Admin</Link></div>
-            <div><strong>Boundary</strong><Link href="/cleanup-boundary">Professional boundary</Link><Link href="/reviewer">Reviewer role</Link></div>
-            <div><strong>Contact</strong><a href="mailto:support@cleanupdesk.com">support@cleanupdesk.com</a></div>
+        <footer className="as-footer">
+          <div className="as-wrap as-footer-inner">
+            <div>
+              <span className="as-footer-brand">AdStake</span>
+              <p className="as-footer-tagline">We find the money your search ads are wasting.</p>
+            </div>
+            <nav className="as-footer-nav">
+              <Link href="#how">How it works</Link>
+              <Link href="#pricing">Pricing</Link>
+              <Link href="/sample">Sample report</Link>
+              <Link href="#">Contact</Link>
+            </nav>
+            <div className="as-footer-legal">
+              <p>No conflict. No retainer. No BS.</p>
+              <p>© 2026 AdStake. Read-only access only. We never modify your campaigns.</p>
+            </div>
           </div>
-          <div className="wrap footerBottom">© 2026 Cleanup Desk</div>
         </footer>
       </body>
     </html>
