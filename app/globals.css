@@ -577,6 +577,56 @@ button, input, select, textarea { font: inherit; }
   margin-top: 14px;
 }
 
+/* ── Connect Page ── */
+.as-connect-page {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  padding: 80px 40px;
+}
+.as-connect-card {
+  max-width: 520px;
+  margin: 0 auto;
+}
+.as-connect-success {
+  text-align: center;
+}
+.as-connect-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.as-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.as-field-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a18;
+}
+.as-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #d8d6d0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  background: #fff;
+  color: #1a1a18;
+  transition: border-color 0.15s;
+  appearance: none;
+}
+.as-input:focus {
+  outline: none;
+  border-color: #16a34a;
+}
+.as-connect-error {
+  font-size: 14px;
+  color: #dc2626;
+}
+
 /* ── Footer ── */
 .as-footer {
   background: var(--footer-dark);

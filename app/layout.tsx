@@ -32,8 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav className="as-navlinks">
               <Link href="#how">How it works</Link>
               <Link href="#pricing">Pricing</Link>
-              <Link href="#">Contact</Link>
-              <Link href="#">Sign in</Link>
+              <a href="mailto:hello@useadstake.com">Contact</a>
               <Link href="/connect" className="as-navcta">Get free audit</Link>
             </nav>
           </div>
