@@ -6,9 +6,9 @@ export default function HomePage() {
       {/* Hero */}
       <section className="as-hero">
         <div className="as-wrap">
-          <h1 className="as-h1 as-fadein">We find the money your search ads are wasting.</h1>
+          <h1 className="as-h1 as-fadein">Before you spend more to grow your ROAS, find out what you could get from spending better.</h1>
           <p className="as-hero-sub as-fadein as-delay1">
-            Free audit in 60 seconds. No credit card. If we find savings, we take 20% — you keep the rest.
+            An independent audit of your ad account — no retainer, no incentive to grow your spend. Free audit in 60 seconds. No credit card. If we find savings, we take 20% — you keep the rest.
           </p>
           <div className="as-hero-actions as-fadein as-delay2">
             <Link href="/connect" className="as-btn-dark">Get your free waste report</Link>
