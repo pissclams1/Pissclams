@@ -1,1 +1,0 @@
-export default function CleanupSummaryPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Summary</h1><p>Cleanup Desk is now in the GapStay source repo as an MVP backend and route set.</p></main>}

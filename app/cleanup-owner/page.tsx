@@ -1,1 +1,0 @@
-export default function OwnerPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Owner View</h1><p>This MVP is deployed on the existing GapStay Vercel project and source repo.</p></main>}

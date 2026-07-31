@@ -1,1 +1,0 @@
-export default function ReviewPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Human Review Required</h1><p>Cleanup Desk is a prep layer. A qualified reviewer must approve all categories and accounting treatment.</p></main>}

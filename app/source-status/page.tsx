@@ -1,1 +1,0 @@
-export default function SourceStatusPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Source Status</h1><p>Cleanup Desk files added.</p></main>}

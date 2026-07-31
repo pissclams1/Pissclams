@@ -1,1 +1,0 @@
-export default function CleanupJsonPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk JSON</h1><p>The MVP returns generated review packets as JSON.</p></main>}
