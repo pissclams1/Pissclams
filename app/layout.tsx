@@ -47,7 +47,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav className="as-footer-nav">
               <Link href="#how">How it works</Link>
               <Link href="#pricing">Pricing</Link>
-              <Link href="/sample">Sample report</Link>
               <a href="mailto:hello@useadstake.com">Contact</a>
             </nav>
             <div className="as-footer-legal">

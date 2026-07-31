@@ -1,1 +1,0 @@
-export default function ReadyCleanupPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Ready</h1><p>Cleanup Desk readiness route.</p></main>}

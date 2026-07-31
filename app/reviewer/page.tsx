@@ -1,1 +1,0 @@
-export default function ReviewerPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Reviewer</h1><p>Generated packets are for reviewer use before client delivery.</p></main>}

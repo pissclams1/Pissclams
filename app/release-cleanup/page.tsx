@@ -1,1 +1,0 @@
-export default function ReleaseCleanupPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Release</h1><p>Cleanup Desk files are committed.</p></main>}

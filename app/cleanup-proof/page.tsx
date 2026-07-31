@@ -1,1 +1,0 @@
-export default function CleanupProofPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Proof</h1><p>API and routes committed to source repo.</p></main>}

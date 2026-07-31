@@ -1,1 +1,0 @@
-export default function DemoPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Demo</h1><p>Use the sample CSV file at /sample-transactions.csv and submit it through the intake page.</p></main>}

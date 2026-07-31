@@ -1,1 +1,0 @@
-export default function OutputPage(){return <main style={{padding:40,fontFamily:'system-ui'}}><h1>Cleanup Desk Output</h1><p>Generated packets include transaction counts, category suggestions, risk flags, vendor list, and client questions.</p></main>}
