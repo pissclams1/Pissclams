@@ -16,7 +16,7 @@ def get(url, binary=False):
     for d in (3, 10, 30, 90):
         try:
             data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=60).read()
-            time.sleep(1.2)
+            time.sleep(3)
             return data if binary else json.loads(data)
         except Exception as e:
             print("retry", d, str(e)[:50], flush=True); time.sleep(d)
