@@ -18,7 +18,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
     ["Swipes/session p90", String(m.swipes_per_session.p90)],
     ["D1 return", p(m.d1_return)],
     ["D7 return (target ≥ 15%)", p(m.d7_return), ok(m.d7_return >= 0.15)],
-    ["Like rate overall (target 20–60%)", p(m.like_rate_overall), m.like_rate_overall == null ? undefined : ok(m.like_rate_overall >= 0.2 && m.like_rate_overall <= 0.6)],
+    ["Like rate overall (target 5–25%)", p(m.like_rate_overall), m.like_rate_overall == null ? undefined : ok(m.like_rate_overall >= 0.05 && m.like_rate_overall <= 0.25)],
     ["Top 10% creations' share of impressions", p(m.exposure.top10_share)],
     ["Gini of impressions", m.exposure.gini.toFixed(3)],
     ["Creations with ≥ 100 impressions", p(m.share_creations_100_impressions)],

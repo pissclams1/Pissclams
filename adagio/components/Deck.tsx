@@ -55,8 +55,10 @@ export default function Deck() {
   const locked = useRef(false);
   const topEl = useRef<HTMLDivElement | null>(null);
   const loveEl = useRef<HTMLDivElement | null>(null);
-  const passEl = useRef<HTMLDivElement | null>(null);
   const drag = useRef<{ x: number; y: number; dx: number; dy: number; id: number } | null>(null);
+  const lastTap = useRef(0);
+  const liked = useRef<Set<string>>(new Set());
+  const [likedUi, setLikedUi] = useState<Set<string>>(new Set());
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const top = cards[idx];
@@ -115,21 +117,30 @@ export default function Deck() {
     }).catch(() => {});
   }, []);
 
-  const fly = useCallback((dir: 1 | -1) => {
+  // Swipe up = next card. A card gets exactly one verdict: 'like' if hearted, else 'pass'.
+  const advance = useCallback(() => {
     const el = topEl.current;
     if (!top || locked.current || !el) return;
     locked.current = true;
     const card = top;
     el.style.transition = reduced() ? "opacity 250ms ease-out" : "transform 250ms ease-out, opacity 250ms ease-out";
-    if (!reduced()) el.style.transform = `translateX(${dir * innerWidth * 1.2}px) rotate(${dir * 18}deg)`;
+    if (!reduced()) el.style.transform = `translateY(${-innerHeight * 1.1}px)`;
     el.style.opacity = "0";
-    (dir === 1 ? loveEl : passEl).current!.style.opacity = "1";
     setTimeout(() => {
-      log(dir === 1 ? "like" : "pass", card);
+      if (!liked.current.has(card.id)) log("pass", card);
       setSwipes((n) => n + 1);
       setIdx((i) => i + 1);
       locked.current = false;
     }, 250);
+  }, [top, log]);
+
+  const love = useCallback(() => {
+    if (!top || locked.current || liked.current.has(top.id)) return;
+    liked.current.add(top.id);
+    setLikedUi(new Set(liked.current));
+    log("like", top);
+    const st = loveEl.current;
+    if (st) { st.style.transition = "opacity 120ms"; st.style.opacity = "1"; setTimeout(() => { st.style.transition = "opacity 500ms"; st.style.opacity = "0"; }, 650); }
   }, [top, log]);
 
   const toggleDetails = useCallback(() => {
@@ -158,10 +169,13 @@ export default function Deck() {
   };
 
   useEffect(() => {
-    const k = (e: KeyboardEvent) => { if (e.key === "ArrowRight") fly(1); else if (e.key === "ArrowLeft") fly(-1); };
+    const k = (e: KeyboardEvent) => {
+      if (e.key === "ArrowUp" || e.key === "ArrowDown" || e.key === " ") { e.preventDefault(); advance(); }
+      else if (e.key === "Enter" || e.key.toLowerCase() === "l") love();
+    };
     addEventListener("keydown", k);
     return () => removeEventListener("keydown", k);
-  }, [fly]);
+  }, [advance, love]);
 
   // pointer drag
   const onDown = (e: React.PointerEvent) => {
@@ -174,21 +188,21 @@ export default function Deck() {
     const d = drag.current; const el = topEl.current;
     if (!d || !el) return;
     d.dx = e.clientX - d.x; d.dy = e.clientY - d.y;
-    el.style.transform = `translate(${d.dx}px, ${d.dy * 0.2}px) rotate(${d.dx / 20}deg)`;
-    const o = Math.min(Math.abs(d.dx) / THRESH, 1);
-    if (loveEl.current) loveEl.current.style.opacity = d.dx > 0 ? String(o) : "0";
-    if (passEl.current) passEl.current.style.opacity = d.dx < 0 ? String(o) : "0";
+    el.style.transform = `translateY(${Math.min(d.dy, 24)}px)`;
   };
   const onUp = () => {
     const d = drag.current; const el = topEl.current;
     drag.current = null;
     if (!d || !el) return;
-    if (Math.abs(d.dx) < 5 && Math.abs(d.dy) < 5) { toggleDetails(); return; }
-    if (Math.abs(d.dx) > THRESH) { fly(d.dx > 0 ? 1 : -1); return; }
+    if (Math.abs(d.dx) < 5 && Math.abs(d.dy) < 5) {
+      const now = Date.now();
+      if (now - lastTap.current < 300) { lastTap.current = 0; setDetails(false); love(); } // double-tap = love
+      else { lastTap.current = now; toggleDetails(); }
+      return;
+    }
+    if (d.dy < -THRESH) { advance(); return; }
     el.style.transition = "transform 200ms ease-out";
     el.style.transform = "";
-    if (loveEl.current) loveEl.current.style.opacity = "0";
-    if (passEl.current) passEl.current.style.opacity = "0";
   };
 
   const atEnd = ready && !top && exhausted && !error;
@@ -211,7 +225,6 @@ export default function Deck() {
             onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}>
             <img src={top.image_url} alt={top.title} fetchPriority="high" draggable={false} />
             <div className="stamp love" ref={loveEl}>LOVE</div>
-            <div className="stamp pass" ref={passEl}>PASS</div>
             {swipes < 3 && !details && <div className="tap-hint">Tap for details</div>}
           </div>
         )}
@@ -227,11 +240,12 @@ export default function Deck() {
       </main>
 
       <div className="actions">
-        <button className="btn lg pass" aria-label="Pass" onClick={() => fly(-1)} disabled={!top}><Icon name="x" /></button>
         <button className={`btn sm${top && saved.has(top.id) ? " on" : ""}`} aria-label="Save" onClick={save} disabled={!top}>
           <Icon name="bookmark" filled={!!top && saved.has(top.id)} />
         </button>
-        <button className="btn lg love" aria-label="Love" onClick={() => fly(1)} disabled={!top}><Icon name="heart" /></button>
+        <button className={`btn lg love${top && likedUi.has(top.id) ? " on" : ""}`} aria-label="Love" onClick={love} disabled={!top}>
+          <Icon name="heart" filled={!!top && likedUi.has(top.id)} />
+        </button>
         <button className="btn sm" aria-label="Share" onClick={() => share(top)} disabled={!top}><Icon name="share" /></button>
       </div>
 
@@ -246,7 +260,7 @@ export default function Deck() {
       {hint && ready && top && (
         <div className="overlay" role="dialog" aria-label="How it works">
           <div>
-            <p>Swipe right to love it. Swipe left to pass. Tap to see who made it.</p>
+            <p>Swipe up for the next one. Tap the heart if you love it. Tap the art to see who made it.</p>
             <button className="pill" onClick={() => { setHint(false); ls.set(LS.hint, "1"); }}>Got it</button>
           </div>
         </div>

@@ -23,7 +23,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .stamp { position: absolute; top: 28px; font: 500 20px var(--sans); letter-spacing: .12em; padding: 6px 14px; border-radius: 10px;
   border: 2px solid currentColor; opacity: 0; pointer-events: none; }
 .stamp.love { left: 24px; color: var(--accent); transform: rotate(-8deg); }
-.stamp.pass { right: 24px; color: #cfcfcf; transform: rotate(8deg); }
 .tap-hint { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); font-size: 13px; color: var(--text);
   background: rgba(11,11,12,.6); padding: 6px 12px; border-radius: 999px; pointer-events: none; }
 
@@ -35,12 +34,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .badge { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 500; color: var(--accent);
   border: 1px solid var(--accent); border-radius: 999px; padding: 4px 12px; }
 
-.actions { flex: none; display: flex; justify-content: center; align-items: center; gap: 20px; padding: 12px 0 6px;
+.actions { flex: none; display: flex; justify-content: center; align-items: center; gap: 28px; padding: 12px 0 6px;
   background: linear-gradient(rgba(11,11,12,0), rgba(11,11,12,.9)); }
 .btn { display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--hair); background: rgba(22,22,24,.85); color: var(--text); }
 .btn.lg { width: 52px; height: 52px; } .btn.sm { width: 44px; height: 44px; }
 .btn.love, .btn.on { color: var(--accent); border-color: var(--accent); }
-.btn.pass { color: var(--muted); }
 .btn svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
 .footer { flex: none; text-align: center; font-size: 13px; color: var(--muted); padding: 4px 16px calc(8px + env(safe-area-inset-bottom)); }
