@@ -13,7 +13,7 @@ SRC = {  # category -> Adagio category
 OK = re.compile(r"^(cc0|public domain|pd[- ])", re.I)
 
 def get(url, binary=False):
-    for d in (3, 10, 30, 90):
+    for d in (3, 10, 30, 90, 180):
         try:
             data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=60).read()
             time.sleep(3)
@@ -25,9 +25,28 @@ def get(url, binary=False):
 def strip(s): return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", s or ""))).strip()
 
 cands, seen = [], set()
-for cat, mapped in SRC.items():
+CATS = ["landscape", "portrait", "surreal", "abstract", "texture", "architecture"]
+def guess(name, default):
+    n = name.lower()
+    for k, v in (("landscape", "landscape"), ("portrait", "portrait"), ("texture", "texture"), ("pattern", "texture"),
+                 ("building", "architecture"), ("architect", "architecture"), ("city", "architecture"),
+                 ("surreal", "surreal"), ("fantasy", "surreal"), ("abstract", "abstract")):
+        if k in n: return v
+    return default
+queue = [(c, m, 0) for c, m in SRC.items()]; done = set()
+while queue and len(cands) < TARGET * 1.3:
+    cat, mapped, depth = queue.pop(0)
+    if cat in done: continue
+    done.add(cat)
+    if depth < 2:  # walk subcategories (parent categories hold few or no files)
+        r = get("https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(
+            dict(action="query", list="categorymembers", cmtitle=f"Category:{cat}", cmtype="subcat", cmlimit=40, format="json")))
+        for m in (r or {}).get("query", {}).get("categorymembers", []):
+            t = m["title"][9:]
+            if not re.search(r"video|photograph|third-party|assumed|artifact|teaching", t, re.I):
+                queue.append((t, guess(t, mapped), depth + 1))
     cont = {}
-    for _ in range(6):
+    for _ in range(3):
         q = dict(action="query", generator="categorymembers", gcmtitle=f"Category:{cat}", gcmtype="file", gcmlimit=50,
                  prop="imageinfo", iiprop="url|size|mime|extmetadata", iiurlwidth=1080, format="json", **cont)
         r = get("https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(q))
@@ -43,8 +62,7 @@ for cat, mapped in SRC.items():
                               artist=strip(md.get("Artist", {}).get("value", ""))[:60] or "Unknown", cat=mapped))
         print(cat, len(cands), flush=True)
         if "continue" not in r or len(cands) >= TARGET * 1.3: break
-        cont = {k: v for k, v in r["continue"].items()}
-    if len(cands) >= TARGET * 1.3: break
+        cont = dict(r["continue"])
 
 rows, log, n = [], [], 0
 for c in cands:
