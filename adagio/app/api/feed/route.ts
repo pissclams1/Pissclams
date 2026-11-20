@@ -20,7 +20,7 @@ export async function GET(req: Request) {
 
   const all: Stat[] = (stats.data ?? []).map((r: any) => ({
     id: r.creation_id, category: r.category, impressions: Number(r.impressions),
-    likes: Number(r.likes), passes: Number(r.passes), impressionsToday: Number(r.impressions_today),
+    likes: Number(r.likes), passes: Number(r.weighted_passes), impressionsToday: Number(r.impressions_today),
   }));
   const pool = all.filter((s) => !seen.has(s.id));
   const ids = selectNext({

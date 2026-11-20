@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { selectNext, mulberry32, exposureCap, Stat } from "./distribution";
+import { selectNext, mulberry32, exposureCap, passWeight, Stat } from "./distribution";
 
 const mk = (id: string, o: Partial<Stat> = {}): Stat => ({
   id, category: null, impressions: 200, likes: 0, passes: 0, impressionsToday: 0, ...o,
@@ -58,5 +58,22 @@ describe("distribution", () => {
   it("is deterministic for a fixed seed", () => {
     const pool = Array.from({ length: 20 }, (_, i) => mk(`c${i}`, { likes: i }));
     expect(selectNext({ pool, n: 10, rng: mulberry32(9) })).toEqual(selectNext({ pool, n: 10, rng: mulberry32(9) }));
+  });
+
+  it("weights passes by dwell time", () => {
+    expect(passWeight(300)).toBe(0);
+    expect(passWeight(400)).toBeCloseTo(0.25);
+    expect(passWeight(3000)).toBe(1);
+    expect(passWeight(60000)).toBe(1);
+    expect(passWeight(1700)).toBeGreaterThan(passWeight(800));
+  });
+
+  it("a creation skipped after long looks is picked less than one skipped quickly", () => {
+    const rng = mulberry32(11);
+    // same raw pass count; weighted totals differ (30 x 1.0 vs 30 x 0.25)
+    const pool = [mk("long", { likes: 5, passes: 30 }), mk("quick", { likes: 5, passes: 7.5 })];
+    const counts = { long: 0, quick: 0 } as Record<string, number>;
+    for (let i = 0; i < 400; i++) counts[selectNext({ pool, n: 1, rng })[0]]++;
+    expect(counts.quick).toBeGreaterThan(counts.long * 2);
   });
 });
