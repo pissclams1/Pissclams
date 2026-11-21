@@ -1,42 +1,66 @@
-// Usage: npm run seed -- ./seed.csv ./images
-// seed.csv columns: title,creator_name,tools,commercial_ok,category,filename
-import { readFileSync } from "node:fs";
+// Usage: npm run seed -- [dir] [--dry-run] [--deactivate-others]
+//   dir  folder holding seed.csv and the .webp files (default: ./seed)
+// Needs NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (not required for --dry-run).
+// Idempotent: re-running updates rows in place (keyed on image URL) and re-uploads files.
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { createClient } from "@supabase/supabase-js";
+import { validateSeed } from "../lib/seed";
 
-const [csvPath, imgDir] = process.argv.slice(2);
-if (!csvPath || !imgDir) throw new Error("usage: seed <seed.csv> <images-dir>");
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL!, key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const sb = createClient(url, key, { auth: { persistSession: false } });
+const args = process.argv.slice(2);
+const dry = args.includes("--dry-run");
+const deactivate = args.includes("--deactivate-others");
+const dir = args.find((a) => !a.startsWith("--")) ?? "seed";
 const BUCKET = "art";
 
-function parseCsv(text: string): Record<string, string>[] {
-  const rows: string[][] = []; let row: string[] = [], cur = "", q = false;
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
-    if (q) { if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; }
-    else if (ch === '"') q = true;
-    else if (ch === ",") { row.push(cur); cur = ""; }
-    else if (ch === "\n" || ch === "\r") { if (ch === "\r" && text[i + 1] === "\n") i++; row.push(cur); cur = ""; if (row.some(Boolean)) rows.push(row); row = []; }
-    else cur += ch;
-  }
-  if (cur || row.length) { row.push(cur); rows.push(row); }
-  const [head, ...rest] = rows;
-  return rest.map((r) => Object.fromEntries(head.map((h, i) => [h.trim(), (r[i] ?? "").trim()])));
-}
+async function main() {
+  const csvPath = join(dir, "seed.csv");
+  if (!existsSync(csvPath)) throw new Error(`${csvPath} not found`);
+  const { rows, errors } = validateSeed(readFileSync(csvPath, "utf8"), (f) => existsSync(join(dir, f)));
 
-(async () => {
-  await sb.storage.createBucket(BUCKET, { public: true }).catch(() => {});
-  const rows = parseCsv(readFileSync(csvPath, "utf8"));
+  // one creator = one portfolio/email; conflicting values across rows are an error
+  const creators = new Map<string, { portfolio_url: string | null; contact_email: string | null }>();
   for (const r of rows) {
-    const path = r.filename;
-    const up = await sb.storage.from(BUCKET).upload(path, readFileSync(`${imgDir}/${path}`), { contentType: "image/webp", upsert: true });
-    if (up.error) throw up.error;
-    const image_url = sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
-    const { error } = await sb.from("creations").insert({
-      title: r.title, creator_name: r.creator_name, tools: r.tools || null,
-      commercial_ok: r.commercial_ok === "true", category: r.category || null, image_url,
-    });
-    if (error) throw error;
-    console.log("seeded", r.title);
+    const prev = creators.get(r.creator_name);
+    if (!prev) { creators.set(r.creator_name, { portfolio_url: r.portfolio_url, contact_email: r.contact_email }); continue; }
+    for (const k of ["portfolio_url", "contact_email"] as const) {
+      if (r[k] && prev[k] && r[k] !== prev[k]) errors.push(`creator "${r.creator_name}" has conflicting ${k} values`);
+      prev[k] = prev[k] ?? r[k];
+    }
   }
-})();
+  if (errors.length) { console.error(errors.join("\n")); process.exit(1); }
+  console.log(`${rows.length} creations, ${creators.size} creators validated.`);
+  if (dry) { console.log("dry run: nothing uploaded or written."); return; }
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL, key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) throw new Error("set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY");
+  const sb = createClient(url, key, { auth: { persistSession: false } });
+
+  const b = await sb.storage.createBucket(BUCKET, { public: true });
+  if (b.error && !/already exists/i.test(b.error.message)) throw b.error;
+
+  const { data: cs, error: ce } = await sb.from("creators")
+    .upsert([...creators].map(([name, v]) => ({ name, ...v })), { onConflict: "name" }).select("id,name");
+  if (ce) throw ce;
+  const creatorId = new Map(cs!.map((c) => [c.name, c.id]));
+
+  const urls: string[] = [];
+  for (const r of rows) {
+    const up = await sb.storage.from(BUCKET).upload(r.filename, readFileSync(join(dir, r.filename)), { contentType: "image/webp", upsert: true });
+    if (up.error) throw up.error;
+    const image_url = sb.storage.from(BUCKET).getPublicUrl(r.filename).data.publicUrl;
+    urls.push(image_url);
+    const { error } = await sb.from("creations").upsert({
+      title: r.title, creator_name: r.creator_name, creator_id: creatorId.get(r.creator_name),
+      tools: r.tools, commercial_ok: r.commercial_ok, category: r.category, image_url, active: true,
+    }, { onConflict: "image_url" });
+    if (error) throw error;
+    console.log("loaded", r.title);
+  }
+  if (deactivate) {
+    const { error } = await sb.from("creations").update({ active: false }).not("image_url", "in", `(${urls.map((u) => `"${u}"`).join(",")})`);
+    if (error) throw error;
+    console.log("deactivated all other creations");
+  }
+}
+main().catch((e) => { console.error(e.message ?? e); process.exit(1); });

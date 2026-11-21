@@ -1,0 +1,13 @@
+title,creator_name,tools,commercial_ok,category,filename,portfolio_url,contact_email
+Test Placeholder 01,Placeholder Studio A,Stable Diffusion,true,abstract,test-01.webp,https://example.com/portfolio-a,a@example.com
+Test Placeholder 02,Placeholder Studio B,Stable Diffusion,false,landscape,test-02.webp,,b@example.com
+Test Placeholder 03,Placeholder Studio C,Stable Diffusion,false,portrait,test-03.webp,https://example.com/portfolio-c,
+Test Placeholder 04,Placeholder Studio A,Stable Diffusion,false,surreal,test-04.webp,https://example.com/portfolio-a,a@example.com
+Test Placeholder 05,Placeholder Studio B,Stable Diffusion,true,texture,test-05.webp,,b@example.com
+Test Placeholder 06,Placeholder Studio C,Stable Diffusion,false,architecture,test-06.webp,https://example.com/portfolio-c,
+Test Placeholder 07,Placeholder Studio A,Stable Diffusion,false,abstract,test-07.webp,https://example.com/portfolio-a,a@example.com
+Test Placeholder 08,Placeholder Studio B,Stable Diffusion,false,landscape,test-08.webp,,b@example.com
+Test Placeholder 09,Placeholder Studio C,Stable Diffusion,true,portrait,test-09.webp,https://example.com/portfolio-c,
+Test Placeholder 10,Placeholder Studio A,Stable Diffusion,false,surreal,test-10.webp,https://example.com/portfolio-a,a@example.com
+Test Placeholder 11,Placeholder Studio B,Stable Diffusion,false,texture,test-11.webp,,b@example.com
+Test Placeholder 12,Placeholder Studio C,Stable Diffusion,false,architecture,test-12.webp,https://example.com/portfolio-c,
