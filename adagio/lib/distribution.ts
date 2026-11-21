@@ -3,23 +3,13 @@ export type Stat = {
   id: string;
   category: string | null;
   impressions: number; // lifetime
-  likes: number; // meaningful
-  passes: number; // meaningful, dwell-weighted (see passWeight); may be fractional
+  meaningful: number; // meaningful impressions: a `next` with dwell >= 400ms, or any love
+  loves: number;
   impressionsToday: number;
 };
 
 export type Rng = () => number;
 
-// A pass (skip without a heart) counts as a negative signal that grows with dwell time:
-// 400ms (noise floor) -> 0.25, 3000ms or more -> 1.0. Likes always weigh 1.
-// Mirrored in supabase/migrations/002_weighted_passes.sql; keep both in sync.
-export const NOISE_MS = 400;
-export const FULL_PASS_MS = 3000;
-export function passWeight(dwellMs: number): number {
-  if (dwellMs < NOISE_MS) return 0;
-  const t = Math.min(1, (dwellMs - NOISE_MS) / (FULL_PASS_MS - NOISE_MS));
-  return 0.25 + 0.75 * t;
-}
 
 export const EXPLORE_SHARE = 0.3;
 export const EXPLORE_BELOW = 150;
@@ -108,7 +98,7 @@ export function selectNext({ pool, n, rng, recentCategories = [], capReference }
     if (!pick) {
       let best = -1;
       for (const s of eligible) {
-        const v = betaSample(1 + s.likes, 1 + s.passes, rng);
+        const v = betaSample(1 + s.loves, 1 + Math.max(0, s.meaningful - s.loves), rng);
         if (v > best) {
           best = v;
           pick = s;
